@@ -95,8 +95,7 @@ else if (key === 'd') {
 else if (key === 's') {
     spelerY = spelerY + 20;
   }
-  // uncomment to prevent any default behavior
-  // return false;
+
 } 
 
 
