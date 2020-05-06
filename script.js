@@ -80,8 +80,25 @@ var tekenKogel = function(x, y) {
  */
 var tekenSpeler = function(x, y) {
   fill("white");
-  ellipse(mouseX, mouseY, 50, 50);
+  ellipse(spelerX, spelerY, 50, 50);
 };
+
+function keyTyped() {
+  if (key === 'a') {
+    spelerX = spelerX - 20;
+  } else if (key === 'w') {
+    spelerY = spelerY - 20;
+  }
+else if (key === 'd') {
+    spelerX = spelerX + 20;
+  }
+else if (key === 's') {
+    spelerY = spelerY + 20;
+  }
+  // uncomment to prevent any default behavior
+  // return false;
+} 
+
 
 
 /**
