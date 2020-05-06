@@ -46,7 +46,7 @@ var score = 0; // aantal behaalde punten
  * Tekent het speelveld
  */
 var tekenVeld = function () {
-  fill("purple");
+  fill('pink');
   rect(20, 20, width - 2 * 20, height - 2 * 20);
 };
 
