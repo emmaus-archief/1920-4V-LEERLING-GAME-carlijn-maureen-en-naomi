@@ -80,25 +80,26 @@ var tekenKogel = function(x, y) {
  */
 var tekenSpeler = function(x, y) {
   fill("white");
-  ellipse(spelerX, spelerY, 50, 50);
+  ellipse(mouseX, spelerY, 50, 50);
+
 };
 
-function keyTyped() {
+
+/*function keyTyped() {
   if (key === 'a') {
-    spelerX = spelerX - 20;
+    spelerX = spelerX - 50;
   } else if (key === 'w') {
-    spelerY = spelerY - 20;
+    spelerY = spelerY - 50;
   }
 else if (key === 'd') {
-    spelerX = spelerX + 20;
+    spelerX = spelerX + 50;
   }
 else if (key === 's') {
-    spelerY = spelerY + 20;
+    spelerY = spelerY + 50;
   }
-  // uncomment to prevent any default behavior
-  // return false;
+  
 } 
-
+*/
 
 
 /**
