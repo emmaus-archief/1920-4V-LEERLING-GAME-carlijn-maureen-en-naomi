@@ -35,8 +35,6 @@ var score = 0; // aantal behaalde punten
 
 
 
-
-
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
 /* ********************************************* */
@@ -81,7 +79,24 @@ var tekenKogel = function(x, y) {
 var tekenSpeler = function(x, y) {
   fill("white");
   ellipse(mouseX, spelerY, 50, 50);
-};
+}
+/* deze is voor asdw beweging maar wel houterig
+function keyTyped() {
+  if (key === 'a') {
+    spelerX = spelerX - 20;
+  } else if (key === 'w') {
+    spelerY = spelerY - 20;
+  }
+else if (key === 'd') {
+    spelerX = spelerX + 20;
+  }
+else if (key === 's') {
+    spelerY = spelerY + 20;
+  }
+
+} 
+
+
 
 
 /**
