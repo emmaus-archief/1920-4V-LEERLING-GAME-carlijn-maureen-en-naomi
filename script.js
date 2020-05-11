@@ -80,7 +80,7 @@ var tekenKogel = function(x, y) {
  */
 var tekenSpeler = function(x, y) {
   fill("white");
-  ellipse(mouseX, mouseY, 50, 50);
+  ellipse(mouseX, spelerY, 50, 50);
 };
 
 
@@ -150,7 +150,7 @@ function setup() {
   createCanvas(1280, 720);
 
   // Kleur de achtergrond blauw, zodat je het kunt zien
-  background('blue');
+  background('grey');
 }
 
 
