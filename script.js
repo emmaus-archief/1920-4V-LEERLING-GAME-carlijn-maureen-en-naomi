@@ -34,7 +34,7 @@ var vijandY = 0;   // y-positie van vijand
 var score = 0; // aantal behaalde punten
 
 
-
+// dit is om even te testen
 
 
 /* ********************************************* */
