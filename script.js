@@ -34,7 +34,7 @@ var vijandY = 0;   // y-positie van vijand
 var score = 0; // aantal behaalde punten
 
 
-
+//test hjhjkl 
 
 
 /* ********************************************* */
