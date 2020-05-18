@@ -12,6 +12,7 @@
 
 
 // testje
+// testje 
 
 /* ********************************************* */
 /* globale variabelen die je gebruikt in je game */
