@@ -17,6 +17,9 @@
 /* globale variabelen die je gebruikt in je game */
 /* ********************************************* */
 
+const SPEELVELDHOOGTE = height - 2 * 20;
+const SPEELVELDBREEDTE = width - 2 * 20;
+
 const UITLEG = 0;
 const SPELEN = 1;
 const GAMEOVER = 2;
@@ -28,8 +31,10 @@ var spelerY = 650; // y-positie van speler
 var kogelX = 0;    // x-positie van kogel
 var kogelY = 0;    // y-positie van kogel
 
-var vijandX = 0;   // x-positie van vijand
-var vijandY = 0;   // y-positie van vijand
+var vijandenX = [];   // x-positie van vijand
+var vijandenY = [];   // y-positie van vijand
+var vijandenSnelheid = []; //de snelheid van de vallende vijanden
+var vijandYSnelheid = -2; // verticale snelheid van de vijanden
 
 var score = 0; // aantal behaalde punten
 
@@ -41,6 +46,14 @@ var score = 0; // aantal behaalde punten
 /*      functies die je gebruikt in je game      */
 /* ********************************************* */
 
+function setup() {
+    createCanvas(SPEELVELDBREEDTE, SPEELVELDHOOGTE);
+    for (i = 0; i < 5; ++) {
+        vijandenX.push(random(20, SPEELVELDBREEDTE - 20));
+        vijandenY.push(random(-250, -30));
+        vijandenSnelheid.push(random(2, 10));
+    }
+}
 
 /**
  * Tekent het speelveld
@@ -56,8 +69,11 @@ var tekenVeld = function () {
  * @param {number} x x-coördinaat
  * @param {number} y y-coördinaat
  */
-var tekenVijand = function(x, y) {
-    
+var tekenVijand = function() {
+    for (var i = 0; i < vijandenX.length; i++) {
+        fill(255, 255, 0);
+        ellipse(vijandenX[i], vijandenY[i], 15, 15);
+    }
 
 };
 
@@ -104,7 +120,15 @@ else if (key === 's') {
  * Updatet globale variabelen met positie van vijand of tegenspeler
  */
 var beweegVijand = function() {
-    
+    for (var i = 0; vijandenX.length; i++) {
+        vijandenY[i] = vijandenY[i] + 5;
+
+        if (vijandenY[i] > SPEELVELDHOOGTE + 20) {
+            vijandenY[i] = random(-100, -30);
+            vijandenX[i] = random(20, SPEELVELDBREEDTE - 20);
+            vijandenSnelheid[i] = random(2, 10);
+       }
+    }
 };
 
 
@@ -193,7 +217,7 @@ function draw() {
       }
 
       tekenVeld();
-      tekenVijand(vijandX, vijandY);
+      tekenVijand();
       tekenKogel(kogelX, kogelY);
       tekenSpeler(spelerX, spelerY);
 
