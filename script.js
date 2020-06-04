@@ -32,20 +32,25 @@ var vijandX = 0;   // x-positie van vijand
 var vijandY = 0;   // y-positie van vijand
 
 var score = 0; // aantal behaalde punten
-
+var plaatje;
 
 
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
 /* ********************************************* */
 
+function preload() {
+    plaatje = loadImage('plaatjes/achtergrondStad.jpg')
+}
 
 /**
  * Tekent het speelveld
  */
 var tekenVeld = function () {
-  fill('pink');
-  rect(20, 20, width - 2 * 20, height - 2 * 20);
+  
+    fill('pink');
+  image(plaatje, 0, 0, width + 50, height + 50);
+  //rect(20, 20, width - 2 * 20, height - 2 * 20);
 };
 
 
