@@ -17,8 +17,8 @@
 /* globale variabelen die je gebruikt in je game */
 /* ********************************************* */
 
-const SPEELVELDHOOGTE = height - 2 * 20;
-const SPEELVELDBREEDTE = width - 2 * 20;
+var SPEELVELDHOOGTE;
+var SPEELVELDBREEDTE;
 
 const UITLEG = 0;
 const SPELEN = 1;
@@ -45,15 +45,6 @@ var score = 0; // aantal behaalde punten
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
 /* ********************************************* */
-
-function setup() {
-    createCanvas(SPEELVELDBREEDTE, SPEELVELDHOOGTE);
-    for (i = 0; i < 5; ++) {
-        vijandenX.push(random(20, SPEELVELDBREEDTE - 20));
-        vijandenY.push(random(-250, -30));
-        vijandenSnelheid.push(random(2, 10));
-    }
-}
 
 /**
  * Tekent het speelveld
@@ -99,6 +90,7 @@ var tekenSpeler = function(x, y) {
   ellipse(spelerX, spelerY, 50, 50);
 };
 
+/*
 function keyTyped() {
   if (key === 'a') {
     spelerX = spelerX - 20;
@@ -113,14 +105,14 @@ else if (key === 's') {
   }
 
 } 
-
+*/
 
 
 /**
  * Updatet globale variabelen met positie van vijand of tegenspeler
  */
 var beweegVijand = function() {
-    for (var i = 0; vijandenX.length; i++) {
+    for (var i = 0; i < vijandenX.length; i++) {
         vijandenY[i] = vijandenY[i] + 5;
 
         if (vijandenY[i] > SPEELVELDHOOGTE + 20) {
@@ -191,6 +183,19 @@ function setup() {
 
   // Kleur de achtergrond blauw, zodat je het kunt zien
   background('blue');
+
+  SPEELVELDHOOGTE = height - 2 * 20;
+  SPEELVELDBREEDTE = width - 2 * 20;
+
+  console.log(vijandenX);
+
+  for (var i = 0; i < 5; i++) {
+    console.log("Dit is nummer " + i);
+    vijandenX.push(random(20, 1220));
+    vijandenY.push(random(-250, -30));
+    vijandenSnelheid.push(random(2, 10));
+  }
+  
 }
 
 
