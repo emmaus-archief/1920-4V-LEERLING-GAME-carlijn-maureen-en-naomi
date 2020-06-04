@@ -32,7 +32,8 @@ var vijandX = 0;   // x-positie van vijand
 var vijandY = 0;   // y-positie van vijand
 
 var score = 0; // aantal behaalde punten
-var plaatje;
+var plaatje; // zorgt ervoor dat we de achtergrond kunnen laden
+var plaatjeSpeler; // zorgt ervoor dat we de speler kunnen laden
 
 
 /* ********************************************* */
@@ -41,6 +42,7 @@ var plaatje;
 
 function preload() {
     plaatje = loadImage('plaatjes/achtergrondStad.jpg')
+    plaatjeSpeler = loadImage('plaatjes/playerKat.png')
 }
 
 /**
@@ -48,9 +50,9 @@ function preload() {
  */
 var tekenVeld = function () {
   
-    fill('pink');
-  image(plaatje, 0, 0, width + 50, height + 50);
-  //rect(20, 20, width - 2 * 20, height - 2 * 20);
+    fill('pink'); // laat dit staan, anders werkt het niet
+  image(plaatje, 0, 0, width + 50, height + 50); // is de achtergrond, '+ 50' zodat de lelijke onderkant er niet op komt
+  //rect(20, 20, width - 2 * 20, height - 2 * 20); // voor het geval dat we weer een roze achtergrond willen
 };
 
 
@@ -82,8 +84,9 @@ var tekenKogel = function(x, y) {
  * @param {number} y y-coördinaat
  */
 var tekenSpeler = function(x, y) {
-  fill("white");
-  ellipse(mouseX, spelerY, 50, 50);
+  fill('white'); // laat dit staan, anders werkt het niet
+  image(plaatjeSpeler, mouseX, spelerY - 100, 150, 150); // afbeelding speler >>> spelerY - 100 omdat het anders onder het scherm komt
+  //ellipse(mouseX, spelerY, 50, 50); // voor als we weer terug willen naar een witte ellipse
 }
 /* deze is voor asdw beweging maar wel houterig
 function keyTyped() {
