@@ -68,8 +68,8 @@ var tekenVeld = function () {
  */
 var tekenVijand = function() {
     for (var i = 0; i < vijandenX.length; i++) {
-        fill(255, 255, 0);
-        ellipse(vijandenX[i], vijandenY[i], 15, 15);
+        fill('blue');
+        ellipse(vijandenX[i], vijandenY[i], 35, 35);
     }
 
 };
