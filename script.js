@@ -28,6 +28,7 @@ var spelStatus = SPELEN;
 var spelerX = 650; // x-positie van speler
 var spelerY = 650; // y-positie van speler
 
+var isKogelZichtbaar = false; //geeft aan waneer de kogel te zien is
 var kogelX = 0;    // x-positie van kogel
 var kogelY = 0;    // y-positie van kogel
 
@@ -83,7 +84,10 @@ var tekenVijand = function() {
  * @param {number} y y-coördinaat
  */
 var tekenKogel = function(x, y) {
-
+    if (isKogelZichtbaar === true) {
+        fill (0, 255, 255);
+        ellipse (x, y, 10, 10);
+    }
 
 };
 
@@ -137,7 +141,17 @@ var beweegVijand = function() {
  * Updatet globale variabelen met positie van kogel of bal
  */
 var beweegKogel = function() {
+    if (keyIsPressed === true) {
+        if (key === " ") {
+            kogelX = mouseX + 140;
+            kogelY = spelerY - 45;
+            isKogelZichtbaar = true;
+        }
+    }
 
+    if (isKogelZichtbaar === true) {
+        kogelY = kogelY - 3; 
+    }
 };
 
 
