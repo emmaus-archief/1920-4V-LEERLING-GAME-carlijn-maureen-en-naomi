@@ -123,12 +123,12 @@ else if (key === 's') {
  */
 var beweegVijand = function() {
     for (var i = 0; i < vijandenX.length; i++) {
-        vijandenY[i] = vijandenY[i] + 5;
+        vijandenY[i] = vijandenY[i] + vijandenSnelheid[i];
 
         if (vijandenY[i] > SPEELVELDHOOGTE + 20) {
             vijandenY[i] = random(-100, -30);
             vijandenX[i] = random(20, SPEELVELDBREEDTE - 20);
-            vijandenSnelheid[i] = random(2, 10);
+            vijandenSnelheid[i] = random(2, 6);
        }
     }
 };
