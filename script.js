@@ -37,9 +37,9 @@ var vijandenSnelheid = []; //de snelheid van de vallende vijanden
 var vijandYSnelheid = -2; // verticale snelheid van de vijanden
 
 var score = 0; // aantal behaalde punten
-var plaatje; // zorgt ervoor dat we de achtergrond kunnen laden
-var plaatjeSpeler; // zorgt ervoor dat we de speler kunnen laden
-
+var plaatje; // declareert afb. achtergrond
+var plaatjeSpeler; // declareert afb. speler
+var plaatjeVijandEen; // declareert afb. vijand 1
 
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
@@ -48,6 +48,7 @@ var plaatjeSpeler; // zorgt ervoor dat we de speler kunnen laden
 function preload() {
     plaatje = loadImage('plaatjes/achtergrondStad.jpg')
     plaatjeSpeler = loadImage('plaatjes/playerKat.png')
+    plaatjeVijandEen = loadImage('plaatjes/vijand-1.png')
 }
 
 /**
@@ -68,8 +69,9 @@ var tekenVeld = function () {
  */
 var tekenVijand = function() {
     for (var i = 0; i < vijandenX.length; i++) {
-        fill(255, 255, 0);
-        ellipse(vijandenX[i], vijandenY[i], 15, 15);
+        //fill('blue');
+        image(plaatjeVijandEen, vijandenX[i], vijandenY[i], 100, 100);
+        //ellipse(vijandenX[i], vijandenY[i], 35, 35);
     }
 
 };
