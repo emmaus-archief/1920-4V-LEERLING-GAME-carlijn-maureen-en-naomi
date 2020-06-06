@@ -48,7 +48,7 @@ var plaatjeVijandEen; // declareert afb. vijand 1
 
 function preload() {
     plaatje = loadImage('plaatjes/achtergrondStad.jpg')
-    plaatjeSpeler = loadImage('plaatjes/playerKat.png')
+    plaatjeSpeler = loadImage('plaatjes/playerKat2.png')
     plaatjeVijandEen = loadImage('plaatjes/vijand-1.png')
 }
 
