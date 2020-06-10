@@ -25,6 +25,9 @@ const SPELEN = 1;
 const GAMEOVER = 2;
 var spelStatus = SPELEN;
 
+var stopwatchSec = 0;
+var stopwatchMin = 0;
+
 var spelerX = 650; // x-positie van speler
 var spelerY = 650; // y-positie van speler
 
@@ -248,10 +251,31 @@ function draw() {
       tekenVijand();
       tekenKogel(kogelX, kogelY);
       tekenSpeler(spelerX, spelerY);
+      tekenTimer(); 
 
       if (checkGameOver()) {
         spelStatus = GAMEOVER;
       }
       break;
   }
+}
+
+/*
+function tekenTimer() {
+    text(timer, 50, 50, 50, 50);
+    color: red;
+}
+*/
+
+function tekenTimer() {
+    var extraNul = "";
+    if (stopwatchSec < 10) {
+        extraNul = "0";
+    }
+
+    var timerString = stopwatchMin + " : " + extraNul + stopwatchSec;
+    
+    textSize(16);
+    background: red;
+    text(timerString , 50, 50, 50, 50);
 }
