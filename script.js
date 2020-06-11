@@ -234,23 +234,32 @@ function setup() {
 function draw() {
   switch (spelStatus) {
     case BEGIN:
-        background(255, 0, 255);
-        fill(255, 255, 255);
+        tekenVeld();
+        fill(230, 230, 230);
+        textSize(100);
+        text("WELCOME", 400, 100, 500, 100);
+
+        fill(200, 200, 200);
+        noStroke();
+        rect(320, 600, 750, 50);
+
+        fill(0, 0, 0);
         textSize(30);
-        text("Press the in square to start", 500, 100, 500, 50);
+        text("click here to start!", 560, 610, 550, 700);
 
-        rect(500, 500, 280, 50);
-
-        if ( mouseX > 500 && mouseX < 780 && mouseY > 500 && mouseY < 550) {
+        if ( mouseIsPressed === true && mouseX > 320 && mouseX < 1700 && mouseY > 600 && mouseY < 650) {
             spelStatus = UITLEGBEWEGEN;
         }
 
     break;
     case UITLEGBEWEGEN:
-        background(200, 0, 200);
-        fill(255, 255, 255);
+        background(255, 150, 255);
+        fill(0, 0, 0);
         textSize(30);
         text("Move your mouse to move", 500, 100, 500, 50);
+
+        beweegSpeler();
+        tekenSpeler(spelerX, spelerY);
 
         if (keyIsPressed === true && key === " ") {
             spelStatus = UITLEGSCHIETEN;
