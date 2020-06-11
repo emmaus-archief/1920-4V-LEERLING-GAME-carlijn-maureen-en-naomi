@@ -20,10 +20,14 @@
 var SPEELVELDHOOGTE;
 var SPEELVELDBREEDTE;
 
-const UITLEG = 0;
-const SPELEN = 1;
-const GAMEOVER = 2;
-var spelStatus = SPELEN;
+const BEGIN = 0;
+const UITLEGBEWEGEN = 1;
+const UITLEGSCHIETEN = 2;
+const UITLEGVERHAAL = 3;
+const SPELEN = 4;
+const GAMEOVER = 5;
+
+var spelStatus = BEGIN;
 
 var spelerX = 650; // x-positie van speler
 var spelerY = 650; // y-positie van speler
@@ -229,6 +233,52 @@ function setup() {
  */
 function draw() {
   switch (spelStatus) {
+    case BEGIN:
+        background(255, 0, 255);
+        fill(255, 255, 255);
+        textSize(30);
+        text("Press the in square to start", 500, 100, 500, 50);
+
+        rect(500, 500, 280, 50);
+
+        if ( mouseX > 500 && mouseX < 780 && mouseY > 500 && mouseY < 550) {
+            spelStatus = UITLEGBEWEGEN;
+        }
+
+    break;
+    case UITLEGBEWEGEN:
+        background(200, 0, 200);
+        fill(255, 255, 255);
+        textSize(30);
+        text("Move your mouse to move", 500, 100, 500, 50);
+
+        if (keyIsPressed === true && key === " ") {
+            spelStatus = UITLEGSCHIETEN;
+        }
+
+    break;
+    case UITLEGSCHIETEN:
+        background(255, 0, 0);
+        fill(255, 255, 255);
+        textSize(30);
+        text("Press space to shoot", 500, 100, 500, 50);
+
+        if (keyIsPressed === true && key === " ") {
+            spelStatus = UITLEGVERHAAL;
+        }
+
+    break;
+    case UITLEGVERHAAL:
+        background(50, 0, 255);
+        fill(255, 255, 255);
+        textSize(30);
+        text("HELP! Save the world.", 500, 100, 500, 50);
+
+        if (keyIsPressed === true && key === " ") {
+            spelStatus = SPELEN;
+        }
+
+    break;
     case SPELEN:
       beweegVijand();
       beweegKogel();
