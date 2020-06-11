@@ -38,9 +38,12 @@ var vijandenSnelheid = []; //de snelheid van de vallende vijanden
 var vijandYSnelheid = -2; // verticale snelheid van de vijanden
 
 var score = 0; // aantal behaalde punten
+
+// alle afbeeldingen
 var plaatje; // declareert afb. achtergrond
 var plaatjeSpeler; // declareert afb. speler
 var plaatjeVijandEen; // declareert afb. vijand 1
+var plaatjeKogel; // declareert afb. kogel
 
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
@@ -50,6 +53,7 @@ function preload() {
     plaatje = loadImage('plaatjes/achtergrondStad.jpg')
     plaatjeSpeler = loadImage('plaatjes/playerKat2.png')
     plaatjeVijandEen = loadImage('plaatjes/vijand-1.png')
+    plaatjeKogel = loadImage('plaatjes/kogel.png')
 }
 
 /**
@@ -85,8 +89,9 @@ var tekenVijand = function() {
  */
 var tekenKogel = function(x, y) {
     if (isKogelZichtbaar === true) {
-        fill (0, 255, 255);
-        ellipse (x, y, 10, 10);
+        //fill (0, 255, 255);
+        //ellipse (x, y, 10, 10);
+        image(plaatjeKogel, x, y, 45, 80);
     }
 
 };
