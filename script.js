@@ -91,7 +91,7 @@ var tekenKogel = function(x, y) {
     if (isKogelZichtbaar === true) {
         //fill (0, 255, 255);
         //ellipse (x, y, 10, 10);
-        image(plaatjeKogel, x, y, 45, 80);
+        image(plaatjeKogel, x, y, 30, 60);
     }
 
 };
