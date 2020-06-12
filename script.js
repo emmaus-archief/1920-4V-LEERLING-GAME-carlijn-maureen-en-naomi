@@ -20,10 +20,15 @@
 var SPEELVELDHOOGTE;
 var SPEELVELDBREEDTE;
 
-const UITLEG = 0;
-const SPELEN = 1;
-const GAMEOVER = 2;
-var spelStatus = SPELEN;
+const BEGIN = 0;
+const UITLEGBEWEGEN1 = 1;
+const UITLEGBEWEGEN2 = 2;
+const UITLEGSCHIETEN = 3;
+const UITLEGVERHAAL = 4;
+const SPELEN = 5;
+const GAMEOVER = 6;
+
+var spelStatus = BEGIN;
 
 var spelerX = 650; // x-positie van speler
 var spelerY = 650; // y-positie van speler
@@ -235,6 +240,104 @@ function setup() {
  */
 function draw() {
   switch (spelStatus) {
+    case BEGIN:
+        tekenVeld();
+        fill(230, 230, 230);
+        textSize(100);
+        text("WELCOME", 400, 100, 500, 100);
+
+        fill(200, 200, 200);
+        noStroke();
+        rect(300, 600, 750, 50);
+
+        fill(0, 0, 0);
+        textSize(30);
+        text("click here to start!", 560, 610, 550, 700);
+
+        if ( mouseIsPressed === true && mouseX > 300 && mouseX < 1050 && mouseY > 600 && mouseY < 650) {
+            spelStatus = UITLEGBEWEGEN1;
+        }
+
+    break;
+    case UITLEGBEWEGEN1:
+        background(200, 200, 200);
+        fill(0, 0, 0);
+        textSize(30);
+        text("Move your mouse to move", 500, 100, 500, 50);
+
+        fill(200, 170, 200);
+        noStroke();
+        rect(1000, 590, 100, 100); //vierkant waar je heen moet bewegen
+        
+        fill(0, 0, 0);
+        textSize(20);
+        text("move \nhere!", 1025, 610, 1010, 650);
+
+        beweegSpeler();
+        tekenSpeler(spelerX, spelerY);
+
+        if (mouseX > 970 && mouseX < 1100) {
+            spelStatus = UITLEGBEWEGEN2;
+        }
+
+    break;
+    case UITLEGBEWEGEN2:
+        background(200, 200, 200);
+        fill(0, 0, 0);
+        textSize(30);
+        text("Move your mouse to move", 500, 100, 500, 50);
+
+        fill(200, 170, 200);
+        noStroke();
+        rect(300, 590, 100, 100);
+        
+        fill(0, 0, 0);
+        textSize(20);
+        text("move \nhere!", 325, 610, 1010, 650);
+
+        beweegSpeler();
+        tekenSpeler(spelerX, spelerY);
+
+        if (mouseX > 270 && mouseX < 400) {
+            spelStatus = UITLEGSCHIETEN;
+        }
+
+    break;
+    case UITLEGSCHIETEN:
+        background(255, 200, 200);
+        fill(255, 255, 255);
+        textSize(30);
+        text("Press space to shoot", 500, 100, 500, 50);
+
+        fill(200, 170, 200);
+        noStroke();
+        rect(400, 200, 100, 100);
+
+        fill(0, 0, 0);
+        textSize(20);
+        text("shoot \nhere!", 425, 230, 1010, 650);
+
+        beweegSpeler();
+        tekenSpeler(spelerX, spelerY);
+        beweegKogel();
+        tekenKogel(kogelX, kogelY);
+
+        if (kogelX > 400 && kogelX < 490 && kogelY < 300) {
+            spelStatus = UITLEGVERHAAL;
+        }
+
+    break;
+    case UITLEGVERHAAL:
+        background(50, 0, 255);
+        fill(255, 255, 255);
+        textSize(30);
+        text("HELP! Save the world.", 500, 100, 500, 50);
+
+        if (keyIsPressed === true && key === " ") {
+            spelStatus = SPELEN;
+        }
+
+    break;
     case SPELEN:
       beweegVijand();
       beweegKogel();
