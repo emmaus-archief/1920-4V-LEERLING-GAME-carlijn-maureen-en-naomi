@@ -241,19 +241,19 @@ function draw() {
 
         fill(200, 200, 200);
         noStroke();
-        rect(320, 600, 750, 50);
+        rect(300, 600, 750, 50);
 
         fill(0, 0, 0);
         textSize(30);
         text("click here to start!", 560, 610, 550, 700);
 
-        if ( mouseIsPressed === true && mouseX > 320 && mouseX < 1700 && mouseY > 600 && mouseY < 650) {
+        if ( mouseIsPressed === true && mouseX > 300 && mouseX < 1050 && mouseY > 600 && mouseY < 650) {
             spelStatus = UITLEGBEWEGEN;
         }
 
     break;
     case UITLEGBEWEGEN:
-        background(255, 150, 255);
+        background(200, 200, 200);
         fill(0, 0, 0);
         textSize(30);
         text("Move your mouse to move", 500, 100, 500, 50);
