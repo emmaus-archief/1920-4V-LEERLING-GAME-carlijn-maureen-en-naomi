@@ -77,6 +77,7 @@ var tekenVijand = function() {
         //fill('blue');
         image(plaatjeVijandEen, vijandenX[i], vijandenY[i], 100, 100);
         //ellipse(vijandenX[i], vijandenY[i], 35, 35);
+
     }
 
 };
@@ -104,7 +105,7 @@ var tekenKogel = function(x, y) {
  */
 var tekenSpeler = function(x, y) {
   fill('white'); // laat dit staan, anders werkt het niet
-  image(plaatjeSpeler, mouseX, spelerY - 100, 150, 150); // afbeelding speler >>> spelerY - 100 omdat het anders onder het scherm komt
+  image(plaatjeSpeler, mouseX, spelerY - 100, 149, 150); // afbeelding speler >>> spelerY - 100 omdat het anders onder het scherm komt
   //ellipse(mouseX, spelerY, 50, 50); // voor als we weer terug willen naar een witte ellipse
 }
 /* deze is voor asdw beweging maar wel houterig
