@@ -21,11 +21,12 @@ var SPEELVELDHOOGTE;
 var SPEELVELDBREEDTE;
 
 const BEGIN = 0;
-const UITLEGBEWEGEN = 1;
-const UITLEGSCHIETEN = 2;
-const UITLEGVERHAAL = 3;
-const SPELEN = 4;
-const GAMEOVER = 5;
+const UITLEGBEWEGEN1 = 1;
+const UITLEGBEWEGEN2 = 2;
+const UITLEGSCHIETEN = 3;
+const UITLEGVERHAAL = 4;
+const SPELEN = 5;
+const GAMEOVER = 6;
 
 var spelStatus = BEGIN;
 
@@ -248,20 +249,50 @@ function draw() {
         text("click here to start!", 560, 610, 550, 700);
 
         if ( mouseIsPressed === true && mouseX > 300 && mouseX < 1050 && mouseY > 600 && mouseY < 650) {
-            spelStatus = UITLEGBEWEGEN;
+            spelStatus = UITLEGBEWEGEN1;
         }
 
     break;
-    case UITLEGBEWEGEN:
+    case UITLEGBEWEGEN1:
         background(200, 200, 200);
         fill(0, 0, 0);
         textSize(30);
         text("Move your mouse to move", 500, 100, 500, 50);
 
+        fill(200, 170, 200);
+        noStroke();
+        rect(1000, 590, 100, 100);
+        
+        fill(0, 0, 0);
+        textSize(20);
+        text("move \nhere!", 1025, 610, 1010, 650);
+
         beweegSpeler();
         tekenSpeler(spelerX, spelerY);
 
-        if (keyIsPressed === true && key === " ") {
+        if (mouseX > 970 && mouseX < 1100) {
+            spelStatus = UITLEGBEWEGEN2;
+        }
+
+    break;
+    case UITLEGBEWEGEN2:
+        background(200, 200, 200);
+        fill(0, 0, 0);
+        textSize(30);
+        text("Move your mouse to move", 500, 100, 500, 50);
+
+        fill(200, 170, 200);
+        noStroke();
+        rect(300, 590, 100, 100);
+        
+        fill(0, 0, 0);
+        textSize(20);
+        text("move \nhere!", 325, 610, 1010, 650);
+
+        beweegSpeler();
+        tekenSpeler(spelerX, spelerY);
+
+        if (mouseX > 270 && mouseX < 400) {
             spelStatus = UITLEGSCHIETEN;
         }
 
