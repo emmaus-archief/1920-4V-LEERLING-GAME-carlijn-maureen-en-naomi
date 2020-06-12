@@ -261,7 +261,7 @@ function draw() {
 
         fill(200, 170, 200);
         noStroke();
-        rect(1000, 590, 100, 100);
+        rect(1000, 590, 100, 100); //vierkant waar je heen moet bewegen
         
         fill(0, 0, 0);
         textSize(20);
@@ -298,12 +298,25 @@ function draw() {
 
     break;
     case UITLEGSCHIETEN:
-        background(255, 0, 0);
+        background(255, 200, 200);
         fill(255, 255, 255);
         textSize(30);
         text("Press space to shoot", 500, 100, 500, 50);
 
-        if (keyIsPressed === true && key === " ") {
+        fill(200, 170, 200);
+        noStroke();
+        rect(400, 200, 100, 100);
+
+        fill(0, 0, 0);
+        textSize(20);
+        text("shoot \nhere!", 425, 230, 1010, 650);
+
+        beweegSpeler();
+        tekenSpeler(spelerX, spelerY);
+        beweegKogel();
+        tekenKogel(kogelX, kogelY);
+
+        if (kogelX > 400 && kogelX < 490 && kogelY < 300) {
             spelStatus = UITLEGVERHAAL;
         }
 
