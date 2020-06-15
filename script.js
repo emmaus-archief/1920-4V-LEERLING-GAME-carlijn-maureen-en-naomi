@@ -30,6 +30,10 @@ const GAMEOVER = 6;
 
 var spelStatus = BEGIN;
 
+var stopwatchMiliSec = 0;
+var stopwatchSec = 0;
+var stopwatchMin = 0;
+
 var spelerX = 650; // x-positie van speler
 var spelerY = 650; // y-positie van speler
 
@@ -130,6 +134,22 @@ else if (key === 's') {
 } 
 */
 
+// hier wordt de timer getekend
+function tekenTimer() {
+    var extraNul1 = "";
+    var extraNul2 = "";
+    if (stopwatchMiliSec < 10) {
+        extraNul1 = "0";
+    }
+    if (stopwatchSec < 10) {
+        extraNul2 = "0";
+    }
+
+    var timerString = stopwatchMin + " : " + extraNul2 + stopwatchSec + " : " + extraNul1 + stopwatchMiliSec;
+    
+    textSize(18);
+    text(timerString , SPEELVELDBREEDTE - 60, 30, 100, 50);
+}
 
 
 /**
@@ -204,6 +224,20 @@ var checkGameOver = function() {
     
   return false;
 };
+
+// deze functie zorgt ervoor dat de timer gaat lopen
+function timerLoopt() {
+    stopwatchMiliSec++;
+
+    if (stopwatchMiliSec == 60) {
+        stopwatchSec++;
+        stopwatchMiliSec = 0;
+    }
+    if (stopwatchSec == 60) {
+        stopwatchMin++;
+        stopwatchSec = 0;
+    }
+}
 
 
 /**
@@ -357,6 +391,8 @@ function draw() {
       tekenVijand();
       tekenKogel(kogelX, kogelY);
       tekenSpeler(spelerX, spelerY);
+      tekenTimer(); 
+      timerLoopt();
 
       if (checkGameOver()) {
         spelStatus = GAMEOVER;
@@ -364,3 +400,11 @@ function draw() {
       break;
   }
 }
+
+/*
+function tekenTimer() {
+    text(timer, 50, 50, 50, 50);
+    color: red;
+}
+*/
+
