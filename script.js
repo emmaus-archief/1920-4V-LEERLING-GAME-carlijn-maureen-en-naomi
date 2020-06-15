@@ -84,7 +84,7 @@ var tekenVeld = function () {
 var tekenVijand = function() {
     for (var i = 0; i < vijandenX.length; i++) {
         //fill('blue');
-        image(plaatjeVijandEen, vijandenX[i], vijandenY[i], 100, 100);
+        image(plaatjeVijandEen, vijandenX[i], vijandenY[i], 60, 60);
         //ellipse(vijandenX[i], vijandenY[i], 35, 35);
 
     }
