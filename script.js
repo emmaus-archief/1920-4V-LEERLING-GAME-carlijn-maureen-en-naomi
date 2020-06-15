@@ -25,6 +25,7 @@ const SPELEN = 1;
 const GAMEOVER = 2;
 var spelStatus = SPELEN;
 
+var stopwatchMiliSec = 0;
 var stopwatchSec = 0;
 var stopwatchMin = 0;
 
@@ -122,6 +123,22 @@ else if (key === 's') {
 } 
 */
 
+// hier wordt de timer getekend
+function tekenTimer() {
+    var extraNul1 = "";
+    var extraNul2 = "";
+    if (stopwatchMiliSec < 10) {
+        extraNul1 = "0";
+    }
+    if (stopwatchSec < 10) {
+        extraNul2 = "0";
+    }
+
+    var timerString = stopwatchMin + " : " + extraNul2 + stopwatchSec + " : " + extraNul1 + stopwatchMiliSec;
+    
+    textSize(18);
+    text(timerString , SPEELVELDBREEDTE - 60, 30, 100, 50);
+}
 
 
 /**
@@ -197,6 +214,20 @@ var checkGameOver = function() {
   return false;
 };
 
+// deze functie zorgt ervoor dat de timer gaat lopen
+function timerLoopt() {
+    stopwatchMiliSec++;
+
+    if (stopwatchMiliSec == 60) {
+        stopwatchSec++;
+        stopwatchMiliSec = 0;
+    }
+    if (stopwatchSec == 60) {
+        stopwatchMin++;
+        stopwatchSec = 0;
+    }
+}
+
 
 /**
  * setup
@@ -252,6 +283,7 @@ function draw() {
       tekenKogel(kogelX, kogelY);
       tekenSpeler(spelerX, spelerY);
       tekenTimer(); 
+      timerLoopt();
 
       if (checkGameOver()) {
         spelStatus = GAMEOVER;
@@ -267,15 +299,3 @@ function tekenTimer() {
 }
 */
 
-function tekenTimer() {
-    var extraNul = "";
-    if (stopwatchSec < 10) {
-        extraNul = "0";
-    }
-
-    var timerString = stopwatchMin + " : " + extraNul + stopwatchSec;
-    
-    textSize(16);
-    background: red;
-    text(timerString , 50, 50, 50, 50);
-}
