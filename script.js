@@ -33,7 +33,7 @@ var score = 0;
 var aantalLevens = 3;
 
 
-var spelStatus = BEGIN;
+var spelStatus = SPELEN;
 
 var stopwatchMiliSec = 0;
 var stopwatchSec = 0;
@@ -42,9 +42,10 @@ var stopwatchMin = 0;
 var spelerX = 650; // x-positie van speler
 var spelerY = 650; // y-positie van speler
 
-var isKogelZichtbaar = false; //geeft aan waneer de kogel te zien is
-var kogelX = 0;    // x-positie van kogel
-var kogelY = 0;    // y-positie van kogel
+//var isKogelZichtbaar = false; //geeft aan waneer de kogel te zien is
+var kogelsX = [];    // x-positie van kogels
+var kogelsY = [];    // y-positie van kogels
+var kogelTimer = 0;
 
 var vijandenX = [];   // x-positie van vijand
 var vijandenY = [];   // y-positie van vijand
@@ -160,15 +161,11 @@ var tekenVijand = function() {
 
 /**
  * Tekent de kogel of de bal
- * @param {number} x x-coördinaat
- * @param {number} y y-coördinaat
  */
-var tekenKogel = function(x, y) {
-    if (isKogelZichtbaar === true) {
-        //fill (0, 255, 255);
-        //ellipse (x, y, 10, 10);
-        image(plaatjeKogel, x, y, 30, 60);
-    }
+var tekenKogels = function() {
+  for(var i = 0; i < kogelsX.length; i++) {
+    image(plaatjeKogel, kogelsX[i], kogelsY[i], 30, 60);
+  }
 
 };
 
@@ -242,17 +239,22 @@ var beweegVijand = function() {
  * Updatet globale variabelen met positie van kogel of bal
  */
 var beweegKogel = function() {
-    if (keyIsPressed === true) {
-        if (key === " ") {
-            kogelX = mouseX + 140;
-            kogelY = spelerY - 45;
-            isKogelZichtbaar = true;
-        }
-    }
+  if (kogelTimer > 0) {
+    kogelTimer--;
+  }
+  
+  if (keyIsPressed === true) {
+      if (key === " " && kogelTimer === 0) {
+          kogelsX.push(mouseX + 140);
+          kogelsY.push(spelerY - 45);
+          kogelTimer = kogelTimer + 100;
+      }
+  }
 
-    if (isKogelZichtbaar === true) {
-        kogelY = kogelY - 3; 
-    }
+  for(var i = 0; i < kogelsX.length; i++) {
+    kogelsY[i] = kogelsY[i] - 3;  
+  }
+
 };
 
 
@@ -285,16 +287,16 @@ var checkVijandGeraakt = function() {
 var checkVijandGeraakt = function(vijandNummer) {
   var teruggeefWaarde = false;
 
+  for(var i = 0; i < kogelsX.length; i++) {
+    if (collideRectRect(kogelsX[i], kogelsY[i], 30, 60, vijandenX[vijandNummer], vijandenY[vijandNummer], 60, 60)) {
+        teruggeefWaarde = true;
+        
+        // verwijder de kogel in kwestie
+        //verwijderKogel(j);
 
-  if (collideCircleCircle(kogelX, kogelY, 10,
-                          vijandenX[vijandNummer], vijandenY[vijandNummer], 10)) {
-      teruggeefWaarde = true;
-      
-      // verwijder de kogel in kwestie
-      //verwijderKogel(j);
-
-      // schrijf boodschap in de console, handig bij het testen van de game
-      console.log("Vijand " + vijandNummer + " geraakt door kogel " + j);
+        // schrijf boodschap in de console, handig bij het testen van de game
+        console.log("Vijand " + vijandNummer + " door kogel " + i);
+    }
   }
 
 
@@ -439,7 +441,7 @@ function draw() {
         beweegSpeler();
         tekenSpeler(spelerX, spelerY);
         beweegKogel();
-        tekenKogel(kogelX, kogelY);
+        tekenKogels(kogelX, kogelY);
 
         if (kogelX > 400 && kogelX < 490 && kogelY < 300) {
             spelStatus = UITLEGVERHAAL;
@@ -461,7 +463,7 @@ function draw() {
       
       // voor iedere vijand checken of kogel 'm raakt
       for(var i = 0; i < vijandenX.length; i++) {
-        if (checkVijandGeraakt() === true) {
+        if (checkVijandGeraakt(i) === true) {
           // punten erbij
           // nieuwe vijand maken
         }
@@ -475,7 +477,7 @@ function draw() {
 
       tekenVeld();
       tekenVijand();
-      tekenKogel(kogelX, kogelY);
+      tekenKogels();
       tekenSpeler(spelerX, spelerY);
       tekenTimer(); 
       timerLoopt();
