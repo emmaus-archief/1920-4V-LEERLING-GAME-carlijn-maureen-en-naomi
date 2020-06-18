@@ -441,9 +441,9 @@ function draw() {
         beweegSpeler();
         tekenSpeler(spelerX, spelerY);
         beweegKogel();
-        tekenKogels(kogelX, kogelY);
+        tekenKogels();
 
-        if (kogelX > 400 && kogelX < 490 && kogelY < 300) {
+        if (kogelsX > 400 && kogelsX < 490 && kogelsY < 300) {
             spelStatus = UITLEGVERHAAL;
         }
 
