@@ -52,7 +52,6 @@ var vijandenY = [];   // y-positie van vijand
 var vijandenSnelheid = []; //de snelheid van de vallende vijanden
 var vijandYSnelheid = -2; // verticale snelheid van de vijanden
 
-var score = 0; // aantal behaalde punten
 
 // alle afbeeldingen
 var plaatje; // declareert afb. achtergrond
@@ -73,7 +72,6 @@ var textVerhaal; // declareert afb. met het verhaal
 /*      functies die je gebruikt in je game      */
 /* ********************************************* */
 
-var score = 0; // aantal behaalde punten
 
 function preload() {
     plaatje = loadImage('plaatjes/achtergrondStad.jpg')
@@ -197,8 +195,9 @@ else if (key === 's') {
 */
 
 function tekenScore() {
+    fill(255, 255, 255);
     textSize(24);
-    text(""+score , width-100, 50, 150, 100);
+    text(""+score , 100, 50, 150, 100);
 }
 
 // hier wordt de timer getekend
@@ -255,6 +254,10 @@ var beweegKogel = function() {
     kogelsY[i] = kogelsY[i] - 3;  
   }
 
+  if (kogelsY < -60) {
+      verwijderKogel(); // Als de kogel uit het beeld is, wordt die verwijdert
+  }
+
 };
 
 
@@ -265,6 +268,22 @@ var beweegKogel = function() {
 var beweegSpeler = function() {
 
 };
+
+function verwijderKogel(nummer) {
+    kogelsX.splice(nummer, 1);
+    kogelsY.splice(nummer, 1);
+}
+
+function verwijderVijand(nummer) {
+    vijandenX.splice(nummer, 1);
+    vijandenY.splice(nummer, 1)
+}
+
+function maakNieuweVijand() {
+    vijandenX.push(random(20, SPEELVELDBREEDTE - 20));
+    vijandenY.push(random(-250, -30));
+    vijandenSnelheid.push(random(2, 10));
+}
 
 
 /**
@@ -291,8 +310,8 @@ var checkVijandGeraakt = function(vijandNummer) {
     if (collideRectRect(kogelsX[i], kogelsY[i], 30, 60, vijandenX[vijandNummer], vijandenY[vijandNummer], 60, 60)) {
         teruggeefWaarde = true;
         
-        // verwijder de kogel in kwestie
-        //verwijderKogel(j);
+        // verwijder de kogel die de vijand raakt
+        verwijderKogel(i);
 
         // schrijf boodschap in de console, handig bij het testen van de game
         console.log("Vijand " + vijandNummer + " door kogel " + i);
@@ -442,7 +461,7 @@ function draw() {
         tekenSpeler(spelerX, spelerY);
         beweegKogel();
         tekenKogels();
-  
+
         if (kogelsX > 400 && kogelsX < 490 && kogelsY < 300) {
             spelStatus = UITLEGVERHAAL;
         }
@@ -454,6 +473,8 @@ function draw() {
 
         if (keyIsPressed === true && key === " ") {
             spelStatus = SPELEN;
+            score = 0;
+            aantalLevens = 3;
         }
 
     break;
@@ -466,7 +487,11 @@ function draw() {
       for(var i = 0; i < vijandenX.length; i++) {
         if (checkVijandGeraakt(i) === true) {
           // punten erbij
-          // nieuwe vijand maken
+          score++;
+
+          // nieuwe vijand maken en oude verwijderen
+            verwijderVijand(i);
+            maakNieuweVijand();
         }
       }
 
@@ -482,6 +507,7 @@ function draw() {
       tekenSpeler(spelerX, spelerY);
       tekenTimer(); 
       timerLoopt();
+      tekenScore();
 
       if (checkGameOver()) {
         spelStatus = GAMEOVER;
