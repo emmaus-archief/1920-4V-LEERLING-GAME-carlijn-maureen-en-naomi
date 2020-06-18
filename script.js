@@ -30,6 +30,10 @@ const GAMEOVER = 6;
 
 var spelStatus = BEGIN;
 
+var stopwatchMiliSec = 0;
+var stopwatchSec = 0;
+var stopwatchMin = 0;
+
 var spelerX = 650; // x-positie van speler
 var spelerY = 650; // y-positie van speler
 
@@ -43,10 +47,15 @@ var vijandenSnelheid = []; //de snelheid van de vallende vijanden
 var vijandYSnelheid = -2; // verticale snelheid van de vijanden
 
 var score = 0; // aantal behaalde punten
+
+// alle afbeeldingen
 var plaatje; // declareert afb. achtergrond
 var plaatjeSpeler; // declareert afb. speler
 var plaatjeVijandEen; // declareert afb. vijand 1
 var naamGame;
+
+var plaatjeKogel; // declareert afb. kogel
+
 
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
@@ -57,6 +66,7 @@ function preload() {
     plaatjeSpeler = loadImage('plaatjes/playerKat2.png')
     plaatjeVijandEen = loadImage('plaatjes/vijand-1.png')
     naamGame = loadImage('plaatjes/naamGame.PNG');
+    plaatjeKogel = loadImage('plaatjes/kogel.png')
 }
 
 /**
@@ -100,8 +110,9 @@ var tekenBeginScherm = function () {
 var tekenVijand = function() {
     for (var i = 0; i < vijandenX.length; i++) {
         //fill('blue');
-        image(plaatjeVijandEen, vijandenX[i], vijandenY[i], 100, 100);
+        image(plaatjeVijandEen, vijandenX[i], vijandenY[i], 60, 60);
         //ellipse(vijandenX[i], vijandenY[i], 35, 35);
+
     }
 
 };
@@ -114,8 +125,9 @@ var tekenVijand = function() {
  */
 var tekenKogel = function(x, y) {
     if (isKogelZichtbaar === true) {
-        fill (0, 255, 255);
-        ellipse (x, y, 10, 10);
+        //fill (0, 255, 255);
+        //ellipse (x, y, 10, 10);
+        image(plaatjeKogel, x, y, 30, 60);
     }
 
 };
@@ -128,7 +140,7 @@ var tekenKogel = function(x, y) {
  */
 var tekenSpeler = function(x, y) {
   fill('white'); // laat dit staan, anders werkt het niet
-  image(plaatjeSpeler, mouseX, spelerY - 100, 150, 150); // afbeelding speler >>> spelerY - 100 omdat het anders onder het scherm komt
+  image(plaatjeSpeler, mouseX, spelerY - 100, 149, 150); // afbeelding speler >>> spelerY - 100 omdat het anders onder het scherm komt
   //ellipse(mouseX, spelerY, 50, 50); // voor als we weer terug willen naar een witte ellipse
 }
 /* deze is voor asdw beweging maar wel houterig
@@ -148,6 +160,22 @@ else if (key === 's') {
 } 
 */
 
+// hier wordt de timer getekend
+function tekenTimer() {
+    var extraNul1 = "";
+    var extraNul2 = "";
+    if (stopwatchMiliSec < 10) {
+        extraNul1 = "0";
+    }
+    if (stopwatchSec < 10) {
+        extraNul2 = "0";
+    }
+
+    var timerString = stopwatchMin + " : " + extraNul2 + stopwatchSec + " : " + extraNul1 + stopwatchMiliSec;
+    
+    textSize(18);
+    text(timerString , SPEELVELDBREEDTE - 60, 30, 100, 50);
+}
 
 
 /**
@@ -222,6 +250,20 @@ var checkGameOver = function() {
     
   return false;
 };
+
+// deze functie zorgt ervoor dat de timer gaat lopen
+function timerLoopt() {
+    stopwatchMiliSec++;
+
+    if (stopwatchMiliSec == 60) {
+        stopwatchSec++;
+        stopwatchMiliSec = 0;
+    }
+    if (stopwatchSec == 60) {
+        stopwatchMin++;
+        stopwatchSec = 0;
+    }
+}
 
 
 /**
@@ -366,6 +408,8 @@ function draw() {
       tekenVijand();
       tekenKogel(kogelX, kogelY);
       tekenSpeler(spelerX, spelerY);
+      tekenTimer(); 
+      timerLoopt();
 
       if (checkGameOver()) {
         spelStatus = GAMEOVER;
@@ -373,3 +417,11 @@ function draw() {
       break;
   }
 }
+
+/*
+function tekenTimer() {
+    text(timer, 50, 50, 50, 50);
+    color: red;
+}
+*/
+
