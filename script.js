@@ -52,11 +52,14 @@ var score = 0; // aantal behaalde punten
 var plaatje; // declareert afb. achtergrond
 var plaatjeSpeler; // declareert afb. speler
 var plaatjeVijandEen; // declareert afb. vijand 1
-var naamGame; // declareert afb. naam game op beginscherm
 var plaatjeKogel; // declareert afb. kogel
 var plaatjeMoveHere; // declareert afb. move here blokje
+var plaatjeShootHere; // declareert afb. shoot here blokje
+var plaatjeSpaceShip; // declareert afb. die wordt gebruikt als achtergrond bij verhaal
+var naamGame; // declareert afb. naam game op beginscherm
 var textMoveMouse; // declareert afb. move your mouse to move
 var textPressShoot; // declareert afb. press space to shoot
+var textVerhaal; // declareert afb. met het verhaal
 
 
 
@@ -68,11 +71,15 @@ function preload() {
     plaatje = loadImage('plaatjes/achtergrondStad.jpg')
     plaatjeSpeler = loadImage('plaatjes/playerKat2.png')
     plaatjeVijandEen = loadImage('plaatjes/vijand-1.png')
-    naamGame = loadImage('plaatjes/naamGame.PNG')
     plaatjeKogel = loadImage('plaatjes/kogel.png')
     plaatjeMoveHere = loadImage('plaatjes/move-here.jpg')
+    plaatjeShootHere = loadImage('plaatjes/shoot-here.jpg')
+    plaatjeSpaceShip = loadImage('plaatjes/binnenSpaceShip.jpg')
+    naamGame = loadImage('plaatjes/naamGame.PNG')
     textMoveMouse = loadImage('plaatjes/text-move-mouse.PNG')
     textPressShoot = loadImage('plaatjes/press-space.PNG')
+    textVerhaal = loadImage('plaatjes/text-verhaal.PNG')
+
 }
 
 /**
@@ -109,21 +116,23 @@ var tekenBeginScherm = function () {
     text("click here to start!", 560, 610, 550, 700); // text in rechthoek
 }
 
+// Dit zijn de afbeeldingen die op het tweede scherm moet komen, het scherm waar je beweegt
 var tekenUitlegBewegenScherm = function (plaatjeX, plaatjeY) {
     image(textMoveMouse, 150, -50, 1000, 400);
     image(plaatjeMoveHere, plaatjeX, plaatjeY, 100, 100)
 }
 
+//Dit zijn de afbeeldingen die op het derde scherm moeten komen, het scherm waar je schiet
 var tekenUitlegSchietenScherm = function (){
     image(textPressShoot, 150, -50, 1000, 400);
+    image(plaatjeShootHere, 400, 200, 100, 100);
+}
 
-        fill(200, 170, 200);
-        noStroke();
-        rect(400, 200, 100, 100);
+var tekenUitlegVerhaalScherm = function () {
+    fill('pink'); // laat dit staan, anders werkt het niet
+    image(plaatjeSpaceShip, 0, 0, width + 50, height + 50); // is de achtergrond, '+ 50' zodat de lelijke onderkant er niet op komt
 
-        fill(0, 0, 0);
-        textSize(20);
-        text("shoot \nhere!", 425, 230, 1010, 650);
+    image(textVerhaal, 250, 100, 800, 500);
 }
 
 /**
@@ -369,10 +378,7 @@ function draw() {
 
     break;
     case UITLEGVERHAAL:
-        background(50, 0, 255);
-        fill(255, 255, 255);
-        textSize(30);
-        text("HELP! Save the world.", 500, 100, 500, 50);
+        tekenUitlegVerhaalScherm();
 
         if (keyIsPressed === true && key === " ") {
             spelStatus = SPELEN;
