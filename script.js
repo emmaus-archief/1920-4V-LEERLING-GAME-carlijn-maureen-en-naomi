@@ -24,6 +24,8 @@ const UITLEG = 0;
 const SPELEN = 1;
 const GAMEOVER = 2;
 var spelStatus = SPELEN;
+var score = 0;
+var aantalLevens = 3;
 
 var spelerX = 650; // x-positie van speler
 var spelerY = 650; // y-positie van speler
@@ -45,6 +47,8 @@ var plaatjeVijandEen; // declareert afb. vijand 1
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
 /* ********************************************* */
+
+var score = 0; // aantal behaalde punten
 
 function preload() {
     plaatje = loadImage('plaatjes/achtergrondStad.jpg')
@@ -91,7 +95,6 @@ var tekenKogel = function(x, y) {
 
 };
 
-
 /**
  * Tekent de speler
  * @param {number} x x-coördinaat
@@ -119,7 +122,10 @@ else if (key === 's') {
 } 
 */
 
-
+function tekenScore() {
+    textSize(24);
+    text(""+score , width-100, 50, 150, 100);
+}
 
 /**
  * Updatet globale variabelen met positie van vijand of tegenspeler
@@ -168,11 +174,70 @@ var beweegSpeler = function() {
  * Zoekt uit of de vijand is geraakt
  * @returns {boolean} true als vijand is geraakt
  */
+/*
 var checkVijandGeraakt = function() {
 
   return false;
 };
 
+*/ 
+
+/**
+ * Zoekt uit of de vijand is geraakt
+ * @returns {boolean} true als vijand is geraakt
+ */
+
+var checkVijandGeraakt = function(vijandNummer) {
+    var teruggeefWaarde = false;
+
+    // ga voor deze vijand iedere kogel langs
+    for (var j = 0; j < kogelsX.length; j++) {
+        if (collideCircleCircle(kogelsX[j], kogelsY[j], kogelDiameter,
+                                vijandenX[vijandNummer], vijandenY[vijandNummer], VIJANDDIAMETER)) {
+            teruggeefWaarde = true;
+            
+            // verwijder de kogel in kwestie
+            verwijderKogel(j);
+
+            // schrijf boodschap in de console, handig bij het testen van de game
+            console.log("Vijand " + vijandNummer + " geraakt door kogel " + j);
+        }
+    }
+
+    return teruggeefWaarde;
+};
+
+function verwijderVijand(nummer) {
+    console.log("verwijder vijand " + nummer);
+    vijandenX.splice(nummer, 1);
+    vijandenY.splice(nummer, 1)
+    vijandenSnelheid.splice(nummer, 1);
+}
+
+
+/**
+ * Zoekt uit of de speler is geraakt
+ * bijvoorbeeld door botsing met vijand
+ * @returns {boolean} true als speler is geraakt
+ */
+var checkSpelerGeraakt = function() {
+    
+  return false;
+};
+
+
+/**
+ * Zoekt uit of het spel is afgelopen
+ * @returns {boolean} true als het spel is afgelopen
+ */
+var checkGameOver = function() {
+  var teruggeefWaarde = false;
+  if (aantalLevens === 0) {
+      teruggeefWaarde = true;
+  }
+    
+  return teruggeefWaarde;
+};
 
 /**
  * Zoekt uit of de speler is geraakt
