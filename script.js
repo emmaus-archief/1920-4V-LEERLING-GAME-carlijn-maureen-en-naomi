@@ -188,21 +188,20 @@ var checkVijandGeraakt = function() {
  */
 
 var checkVijandGeraakt = function(vijandNummer) {
-    var teruggeefWaarde = false;
+  var teruggeefWaarde = false;
 
-    // ga voor deze vijand iedere kogel langs
-    for (var j = 0; j < kogelsX.length; j++) {
-        if (collideCircleCircle(kogelsX[j], kogelsY[j], kogelDiameter,
-                                vijandenX[vijandNummer], vijandenY[vijandNummer], VIJANDDIAMETER)) {
-            teruggeefWaarde = true;
-            
-            // verwijder de kogel in kwestie
-            verwijderKogel(j);
 
-            // schrijf boodschap in de console, handig bij het testen van de game
-            console.log("Vijand " + vijandNummer + " geraakt door kogel " + j);
-        }
-    }
+  if (collideCircleCircle(kogelX, kogelY, 10,
+                          vijandenX[vijandNummer], vijandenY[vijandNummer], 10)) {
+      teruggeefWaarde = true;
+      
+      // verwijder de kogel in kwestie
+      //verwijderKogel(j);
+
+      // schrijf boodschap in de console, handig bij het testen van de game
+      console.log("Vijand " + vijandNummer + " geraakt door kogel " + j);
+  }
+
 
     return teruggeefWaarde;
 };
@@ -299,11 +298,15 @@ function draw() {
       beweegKogel();
       beweegSpeler();
       
-      if (checkVijandGeraakt()) {
-        // punten erbij
-        // nieuwe vijand maken
+      // voor iedere vijand checken of kogel 'm raakt
+      for(var i = 0; i < vijandenX.length; i++) {
+        if (checkVijandGeraakt() === true) {
+          // punten erbij
+          // nieuwe vijand maken
+        }
       }
-      
+
+    
       if (checkSpelerGeraakt()) {
         // leven eraf of gezondheid verlagen
         // eventueel: nieuwe speler maken
