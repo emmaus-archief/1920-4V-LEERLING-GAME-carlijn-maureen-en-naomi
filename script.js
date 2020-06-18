@@ -52,9 +52,12 @@ var score = 0; // aantal behaalde punten
 var plaatje; // declareert afb. achtergrond
 var plaatjeSpeler; // declareert afb. speler
 var plaatjeVijandEen; // declareert afb. vijand 1
-var naamGame;
-
+var naamGame; // declareert afb. naam game op beginscherm
 var plaatjeKogel; // declareert afb. kogel
+var plaatjeMoveHere; // declareert afb. move here blokje
+var textMoveMouse; // declareert afb. move your mouse to move
+var textPressShoot; // declareert afb. press space to shoot
+
 
 
 /* ********************************************* */
@@ -65,8 +68,11 @@ function preload() {
     plaatje = loadImage('plaatjes/achtergrondStad.jpg')
     plaatjeSpeler = loadImage('plaatjes/playerKat2.png')
     plaatjeVijandEen = loadImage('plaatjes/vijand-1.png')
-    naamGame = loadImage('plaatjes/naamGame.PNG');
+    naamGame = loadImage('plaatjes/naamGame.PNG')
     plaatjeKogel = loadImage('plaatjes/kogel.png')
+    plaatjeMoveHere = loadImage('plaatjes/move-here.jpg')
+    textMoveMouse = loadImage('plaatjes/text-move-mouse.PNG')
+    textPressShoot = loadImage('plaatjes/press-space.PNG')
 }
 
 /**
@@ -86,11 +92,12 @@ var tekenBeginScherm = function () {
     //afbeeldingen:
     image(plaatjeSpeler, 80, 300, 250, 250);
     image(plaatjeVijandEen, 1000, 100, 150, 150);
+    image(plaatjeKogel, 900, 400, 90, 180);
     image(naamGame, 150, -50, 1000, 400);
         
     // tekst en vormen:
 
-    fill(200, 200, 200);
+    fill(240, 240, 240);
      if ( mouseX > 300 && mouseX < 1050 && mouseY > 600 && mouseY < 650) {
             fill(150, 150, 150);
      }   
@@ -100,6 +107,23 @@ var tekenBeginScherm = function () {
     fill(0, 0, 0);
     textSize(30);
     text("click here to start!", 560, 610, 550, 700); // text in rechthoek
+}
+
+var tekenUitlegBewegenScherm = function (plaatjeX, plaatjeY) {
+    image(textMoveMouse, 150, -50, 1000, 400);
+    image(plaatjeMoveHere, plaatjeX, plaatjeY, 100, 100)
+}
+
+var tekenUitlegSchietenScherm = function (){
+    image(textPressShoot, 150, -50, 1000, 400);
+
+        fill(200, 170, 200);
+        noStroke();
+        rect(400, 200, 100, 100);
+
+        fill(0, 0, 0);
+        textSize(20);
+        text("shoot \nhere!", 425, 230, 1010, 650);
 }
 
 /**
@@ -311,19 +335,7 @@ function draw() {
     break;
     case UITLEGBEWEGEN1:
         tekenVeld();
-
-        fill(0, 0, 0);
-        textSize(30);
-        text("Move your mouse to move", 500, 100, 500, 50);
-
-        fill(200, 170, 200);
-        noStroke();
-        rect(1000, 590, 100, 100); //vierkant waar je heen moet bewegen
-        
-        fill(0, 0, 0);
-        textSize(20);
-        text("move \nhere!", 1025, 610, 1010, 650);
-
+        tekenUitlegBewegenScherm(1000, 590);
         beweegSpeler();
         tekenSpeler(spelerX, spelerY);
 
@@ -334,18 +346,7 @@ function draw() {
     break;
     case UITLEGBEWEGEN2:
         tekenVeld();
-        fill(0, 0, 0);
-        textSize(30);
-        text("Move your mouse to move", 500, 100, 500, 50);
-
-        fill(200, 170, 200);
-        noStroke();
-        rect(300, 590, 100, 100);
-        
-        fill(0, 0, 0);
-        textSize(20);
-        text("move \nhere!", 325, 610, 1010, 650);
-
+        tekenUitlegBewegenScherm(300, 590);
         beweegSpeler();
         tekenSpeler(spelerX, spelerY);
 
@@ -356,18 +357,7 @@ function draw() {
     break;
     case UITLEGSCHIETEN:
         tekenVeld();
-        fill(255, 255, 255);
-        textSize(30);
-        text("Press space to shoot", 500, 100, 500, 50);
-
-        fill(200, 170, 200);
-        noStroke();
-        rect(400, 200, 100, 100);
-
-        fill(0, 0, 0);
-        textSize(20);
-        text("shoot \nhere!", 425, 230, 1010, 650);
-
+        tekenUitlegSchietenScherm();
         beweegSpeler();
         tekenSpeler(spelerX, spelerY);
         beweegKogel();
