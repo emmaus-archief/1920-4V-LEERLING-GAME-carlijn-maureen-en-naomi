@@ -33,7 +33,7 @@ var score = 0;
 var aantalLevens = 3;
 
 
-var spelStatus = SPELEN;
+var spelStatus = BEGIN;
 
 var stopwatchMiliSec = 0;
 var stopwatchSec = 0;
@@ -52,7 +52,6 @@ var vijandenY = [];   // y-positie van vijand
 var vijandenSnelheid = []; //de snelheid van de vallende vijanden
 var vijandYSnelheid = -2; // verticale snelheid van de vijanden
 
-var score = 0; // aantal behaalde punten
 
 // alle afbeeldingen
 var plaatje; // declareert afb. achtergrond
@@ -73,7 +72,6 @@ var textVerhaal; // declareert afb. met het verhaal
 /*      functies die je gebruikt in je game      */
 /* ********************************************* */
 
-var score = 0; // aantal behaalde punten
 
 function preload() {
     plaatje = loadImage('plaatjes/achtergrondStad.jpg')
@@ -197,8 +195,9 @@ else if (key === 's') {
 */
 
 function tekenScore() {
+    fill(255, 255, 255);
     textSize(24);
-    text(""+score , width-100, 50, 150, 100);
+    text(""+score , 100, 50, 150, 100);
 }
 
 // hier wordt de timer getekend
@@ -313,10 +312,6 @@ var checkVijandGeraakt = function(vijandNummer) {
         
         // verwijder de kogel die de vijand raakt
         verwijderKogel(i);
-
-        // verwijder de geraakte vijand
-        /*verwijderVijand(i);
-        maakNieuweVijand(i);*/
 
         // schrijf boodschap in de console, handig bij het testen van de game
         console.log("Vijand " + vijandNummer + " door kogel " + i);
@@ -465,9 +460,9 @@ function draw() {
         beweegSpeler();
         tekenSpeler(spelerX, spelerY);
         beweegKogel();
-        tekenKogels(kogelX, kogelY);
+        tekenKogels();
 
-        if (kogelX > 400 && kogelX < 490 && kogelY < 300) {
+        if (kogelsX > 400 && kogelsX < 490 && kogelsY < 300) {
             spelStatus = UITLEGVERHAAL;
         }
 
@@ -477,6 +472,8 @@ function draw() {
 
         if (keyIsPressed === true && key === " ") {
             spelStatus = SPELEN;
+            score = 0;
+            aantalLevens = 3;
         }
 
     break;
@@ -489,7 +486,8 @@ function draw() {
       for(var i = 0; i < vijandenX.length; i++) {
         if (checkVijandGeraakt(i) === true) {
           // punten erbij
-          
+          score++;
+
           // nieuwe vijand maken en oude verwijderen
             verwijderVijand(i);
             maakNieuweVijand();
@@ -508,6 +506,7 @@ function draw() {
       tekenSpeler(spelerX, spelerY);
       tekenTimer(); 
       timerLoopt();
+      tekenScore();
 
       if (checkGameOver()) {
         spelStatus = GAMEOVER;
