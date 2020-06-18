@@ -20,12 +20,24 @@
 var SPEELVELDHOOGTE;
 var SPEELVELDBREEDTE;
 
-const UITLEG = 0;
-const SPELEN = 1;
-const GAMEOVER = 2;
-var spelStatus = SPELEN;
+const BEGIN = 0;
+const UITLEGBEWEGEN1 = 1;
+const UITLEGBEWEGEN2 = 2;
+const UITLEGSCHIETEN = 3;
+const UITLEGVERHAAL = 4;
+const SPELEN = 5;
+const GAMEOVER = 6;
+
+
 var score = 0;
 var aantalLevens = 3;
+
+
+var spelStatus = BEGIN;
+
+var stopwatchMiliSec = 0;
+var stopwatchSec = 0;
+var stopwatchMin = 0;
 
 var spelerX = 650; // x-positie van speler
 var spelerY = 650; // y-positie van speler
@@ -40,9 +52,21 @@ var vijandenSnelheid = []; //de snelheid van de vallende vijanden
 var vijandYSnelheid = -2; // verticale snelheid van de vijanden
 
 var score = 0; // aantal behaalde punten
+
+// alle afbeeldingen
 var plaatje; // declareert afb. achtergrond
 var plaatjeSpeler; // declareert afb. speler
 var plaatjeVijandEen; // declareert afb. vijand 1
+var plaatjeKogel; // declareert afb. kogel
+var plaatjeMoveHere; // declareert afb. move here blokje
+var plaatjeShootHere; // declareert afb. shoot here blokje
+var plaatjeSpaceShip; // declareert afb. die wordt gebruikt als achtergrond bij verhaal
+var naamGame; // declareert afb. naam game op beginscherm
+var textMoveMouse; // declareert afb. move your mouse to move
+var textPressShoot; // declareert afb. press space to shoot
+var textVerhaal; // declareert afb. met het verhaal
+
+
 
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
@@ -54,6 +78,15 @@ function preload() {
     plaatje = loadImage('plaatjes/achtergrondStad.jpg')
     plaatjeSpeler = loadImage('plaatjes/playerKat2.png')
     plaatjeVijandEen = loadImage('plaatjes/vijand-1.png')
+    plaatjeKogel = loadImage('plaatjes/kogel.png')
+    plaatjeMoveHere = loadImage('plaatjes/move-here.jpg')
+    plaatjeShootHere = loadImage('plaatjes/shoot-here.jpg')
+    plaatjeSpaceShip = loadImage('plaatjes/binnenSpaceShip.jpg')
+    naamGame = loadImage('plaatjes/naamGame.PNG')
+    textMoveMouse = loadImage('plaatjes/text-move-mouse.PNG')
+    textPressShoot = loadImage('plaatjes/press-space.PNG')
+    textVerhaal = loadImage('plaatjes/text-verhaal.PNG')
+
 }
 
 /**
@@ -66,6 +99,48 @@ var tekenVeld = function () {
   //rect(20, 20, width - 2 * 20, height - 2 * 20); // voor het geval dat we weer een roze achtergrond willen
 };
 
+/*
+Hier staan alle plaatjes en tekst die moeten worden getekend op het allereerste scherm
+*/
+var tekenBeginScherm = function () {
+    //afbeeldingen:
+    image(plaatjeSpeler, 80, 300, 250, 250);
+    image(plaatjeVijandEen, 1000, 100, 150, 150);
+    image(plaatjeKogel, 900, 400, 90, 180);
+    image(naamGame, 150, -50, 1000, 400);
+        
+    // tekst en vormen:
+
+    fill(240, 240, 240);
+     if ( mouseX > 300 && mouseX < 1050 && mouseY > 600 && mouseY < 650) {
+            fill(150, 150, 150);
+     }   
+    noStroke();
+    rect(300, 600, 750, 50); //rechthoek waar je om moet klikken om te beginnen
+
+    fill(0, 0, 0);
+    textSize(30);
+    text("click here to start!", 560, 610, 550, 700); // text in rechthoek
+}
+
+// Dit zijn de afbeeldingen die op het tweede scherm moet komen, het scherm waar je beweegt
+var tekenUitlegBewegenScherm = function (plaatjeX, plaatjeY) {
+    image(textMoveMouse, 150, -50, 1000, 400);
+    image(plaatjeMoveHere, plaatjeX, plaatjeY, 100, 100)
+}
+
+//Dit zijn de afbeeldingen die op het derde scherm moeten komen, het scherm waar je schiet
+var tekenUitlegSchietenScherm = function (){
+    image(textPressShoot, 150, -50, 1000, 400);
+    image(plaatjeShootHere, 400, 200, 100, 100);
+}
+
+var tekenUitlegVerhaalScherm = function () {
+    fill('pink'); // laat dit staan, anders werkt het niet
+    image(plaatjeSpaceShip, 0, 0, width + 50, height + 50); // is de achtergrond, '+ 50' zodat de lelijke onderkant er niet op komt
+
+    image(textVerhaal, 250, 100, 800, 500);
+}
 
 /**
  * Tekent de vijand
@@ -75,8 +150,9 @@ var tekenVeld = function () {
 var tekenVijand = function() {
     for (var i = 0; i < vijandenX.length; i++) {
         //fill('blue');
-        image(plaatjeVijandEen, vijandenX[i], vijandenY[i], 100, 100);
+        image(plaatjeVijandEen, vijandenX[i], vijandenY[i], 60, 60);
         //ellipse(vijandenX[i], vijandenY[i], 35, 35);
+
     }
 
 };
@@ -89,8 +165,9 @@ var tekenVijand = function() {
  */
 var tekenKogel = function(x, y) {
     if (isKogelZichtbaar === true) {
-        fill (0, 255, 255);
-        ellipse (x, y, 10, 10);
+        //fill (0, 255, 255);
+        //ellipse (x, y, 10, 10);
+        image(plaatjeKogel, x, y, 30, 60);
     }
 
 };
@@ -102,7 +179,7 @@ var tekenKogel = function(x, y) {
  */
 var tekenSpeler = function(x, y) {
   fill('white'); // laat dit staan, anders werkt het niet
-  image(plaatjeSpeler, mouseX, spelerY - 100, 150, 150); // afbeelding speler >>> spelerY - 100 omdat het anders onder het scherm komt
+  image(plaatjeSpeler, mouseX, spelerY - 100, 149, 150); // afbeelding speler >>> spelerY - 100 omdat het anders onder het scherm komt
   //ellipse(mouseX, spelerY, 50, 50); // voor als we weer terug willen naar een witte ellipse
 }
 /* deze is voor asdw beweging maar wel houterig
@@ -126,6 +203,24 @@ function tekenScore() {
     textSize(24);
     text(""+score , width-100, 50, 150, 100);
 }
+
+// hier wordt de timer getekend
+function tekenTimer() {
+    var extraNul1 = "";
+    var extraNul2 = "";
+    if (stopwatchMiliSec < 10) {
+        extraNul1 = "0";
+    }
+    if (stopwatchSec < 10) {
+        extraNul2 = "0";
+    }
+
+    var timerString = stopwatchMin + " : " + extraNul2 + stopwatchSec + " : " + extraNul1 + stopwatchMiliSec;
+    
+    textSize(18);
+    text(timerString , SPEELVELDBREEDTE - 60, 30, 100, 50);
+}
+
 
 /**
  * Updatet globale variabelen met positie van vijand of tegenspeler
@@ -258,6 +353,20 @@ var checkGameOver = function() {
   return false;
 };
 
+// deze functie zorgt ervoor dat de timer gaat lopen
+function timerLoopt() {
+    stopwatchMiliSec++;
+
+    if (stopwatchMiliSec == 60) {
+        stopwatchSec++;
+        stopwatchMiliSec = 0;
+    }
+    if (stopwatchSec == 60) {
+        stopwatchMin++;
+        stopwatchSec = 0;
+    }
+}
+
 
 /**
  * setup
@@ -293,6 +402,58 @@ function setup() {
  */
 function draw() {
   switch (spelStatus) {
+    case BEGIN:
+        tekenVeld(); //achtergrond
+        tekenBeginScherm ();
+
+        if ( mouseIsPressed === true && mouseX > 300 && mouseX < 1050 && mouseY > 600 && mouseY < 650) {
+            spelStatus = UITLEGBEWEGEN1;
+        }
+
+    break;
+    case UITLEGBEWEGEN1:
+        tekenVeld();
+        tekenUitlegBewegenScherm(1000, 590);
+        beweegSpeler();
+        tekenSpeler(spelerX, spelerY);
+
+        if (mouseX > 970 && mouseX < 1100) {
+            spelStatus = UITLEGBEWEGEN2;
+        }
+
+    break;
+    case UITLEGBEWEGEN2:
+        tekenVeld();
+        tekenUitlegBewegenScherm(300, 590);
+        beweegSpeler();
+        tekenSpeler(spelerX, spelerY);
+
+        if (mouseX > 270 && mouseX < 400) {
+            spelStatus = UITLEGSCHIETEN;
+        }
+
+    break;
+    case UITLEGSCHIETEN:
+        tekenVeld();
+        tekenUitlegSchietenScherm();
+        beweegSpeler();
+        tekenSpeler(spelerX, spelerY);
+        beweegKogel();
+        tekenKogel(kogelX, kogelY);
+
+        if (kogelX > 400 && kogelX < 490 && kogelY < 300) {
+            spelStatus = UITLEGVERHAAL;
+        }
+
+    break;
+    case UITLEGVERHAAL:
+        tekenUitlegVerhaalScherm();
+
+        if (keyIsPressed === true && key === " ") {
+            spelStatus = SPELEN;
+        }
+
+    break;
     case SPELEN:
       beweegVijand();
       beweegKogel();
@@ -316,6 +477,8 @@ function draw() {
       tekenVijand();
       tekenKogel(kogelX, kogelY);
       tekenSpeler(spelerX, spelerY);
+      tekenTimer(); 
+      timerLoopt();
 
       if (checkGameOver()) {
         spelStatus = GAMEOVER;
@@ -323,3 +486,11 @@ function draw() {
       break;
   }
 }
+
+/*
+function tekenTimer() {
+    text(timer, 50, 50, 50, 50);
+    color: red;
+}
+*/
+
