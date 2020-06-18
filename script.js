@@ -438,7 +438,7 @@ function draw() {
         beweegSpeler();
         tekenSpeler(spelerX, spelerY);
 
-        if (mouseX > 970 && mouseX < 1100) {
+        if (mouseX > 970 && mouseX < 1101) {
             spelStatus = UITLEGBEWEGEN2;
         }
 
@@ -465,6 +465,7 @@ function draw() {
         if (kogelsX > 400 && kogelsX < 490 && kogelsY < 300) {
             spelStatus = UITLEGVERHAAL;
         }
+
 
     break;
     case UITLEGVERHAAL:
