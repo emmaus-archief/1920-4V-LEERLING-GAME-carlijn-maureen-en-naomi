@@ -255,6 +255,10 @@ var beweegKogel = function() {
     kogelsY[i] = kogelsY[i] - 3;  
   }
 
+  if (kogelsY < -60) {
+      verwijderKogel(); // Als de kogel uit het beeld is, wordt die verwijdert
+  }
+
 };
 
 
@@ -265,6 +269,22 @@ var beweegKogel = function() {
 var beweegSpeler = function() {
 
 };
+
+function verwijderKogel(nummer) {
+    kogelsX.splice(nummer, 1);
+    kogelsY.splice(nummer, 1);
+}
+
+function verwijderVijand(nummer) {
+    vijandenX.splice(nummer, 1);
+    vijandenY.splice(nummer, 1)
+}
+
+function maakNieuweVijand() {
+    vijandenX.push(random(20, SPEELVELDBREEDTE - 20));
+    vijandenY.push(random(-250, -30));
+    vijandenSnelheid.push(random(2, 10));
+}
 
 
 /**
@@ -291,8 +311,12 @@ var checkVijandGeraakt = function(vijandNummer) {
     if (collideRectRect(kogelsX[i], kogelsY[i], 30, 60, vijandenX[vijandNummer], vijandenY[vijandNummer], 60, 60)) {
         teruggeefWaarde = true;
         
-        // verwijder de kogel in kwestie
-        //verwijderKogel(j);
+        // verwijder de kogel die de vijand raakt
+        verwijderKogel(i);
+
+        // verwijder de geraakte vijand
+        /*verwijderVijand(i);
+        maakNieuweVijand(i);*/
 
         // schrijf boodschap in de console, handig bij het testen van de game
         console.log("Vijand " + vijandNummer + " door kogel " + i);
@@ -465,7 +489,10 @@ function draw() {
       for(var i = 0; i < vijandenX.length; i++) {
         if (checkVijandGeraakt(i) === true) {
           // punten erbij
-          // nieuwe vijand maken
+          
+          // nieuwe vijand maken en oude verwijderen
+            verwijderVijand(i);
+            maakNieuweVijand();
         }
       }
 
