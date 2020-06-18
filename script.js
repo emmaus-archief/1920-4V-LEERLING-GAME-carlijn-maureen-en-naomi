@@ -52,7 +52,10 @@ var score = 0; // aantal behaalde punten
 var plaatje; // declareert afb. achtergrond
 var plaatjeSpeler; // declareert afb. speler
 var plaatjeVijandEen; // declareert afb. vijand 1
+var naamGame;
+
 var plaatjeKogel; // declareert afb. kogel
+
 
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
@@ -62,6 +65,7 @@ function preload() {
     plaatje = loadImage('plaatjes/achtergrondStad.jpg')
     plaatjeSpeler = loadImage('plaatjes/playerKat2.png')
     plaatjeVijandEen = loadImage('plaatjes/vijand-1.png')
+    naamGame = loadImage('plaatjes/naamGame.PNG');
     plaatjeKogel = loadImage('plaatjes/kogel.png')
 }
 
@@ -75,6 +79,28 @@ var tekenVeld = function () {
   //rect(20, 20, width - 2 * 20, height - 2 * 20); // voor het geval dat we weer een roze achtergrond willen
 };
 
+/*
+Hier staan alle plaatjes en tekst die moeten worden getekend op het allereerste scherm
+*/
+var tekenBeginScherm = function () {
+    //afbeeldingen:
+    image(plaatjeSpeler, 80, 300, 250, 250);
+    image(plaatjeVijandEen, 1000, 100, 150, 150);
+    image(naamGame, 150, -50, 1000, 400);
+        
+    // tekst en vormen:
+
+    fill(200, 200, 200);
+     if ( mouseX > 300 && mouseX < 1050 && mouseY > 600 && mouseY < 650) {
+            fill(150, 150, 150);
+     }   
+    noStroke();
+    rect(300, 600, 750, 50); //rechthoek waar je om moet klikken om te beginnen
+
+    fill(0, 0, 0);
+    textSize(30);
+    text("click here to start!", 560, 610, 550, 700); // text in rechthoek
+}
 
 /**
  * Tekent de vijand
@@ -275,18 +301,8 @@ function setup() {
 function draw() {
   switch (spelStatus) {
     case BEGIN:
-        tekenVeld();
-        fill(230, 230, 230);
-        textSize(100);
-        text("WELCOME", 400, 100, 500, 100);
-
-        fill(200, 200, 200);
-        noStroke();
-        rect(300, 600, 750, 50);
-
-        fill(0, 0, 0);
-        textSize(30);
-        text("click here to start!", 560, 610, 550, 700);
+        tekenVeld(); //achtergrond
+        tekenBeginScherm ();
 
         if ( mouseIsPressed === true && mouseX > 300 && mouseX < 1050 && mouseY > 600 && mouseY < 650) {
             spelStatus = UITLEGBEWEGEN1;
@@ -294,7 +310,8 @@ function draw() {
 
     break;
     case UITLEGBEWEGEN1:
-        background(200, 200, 200);
+        tekenVeld();
+
         fill(0, 0, 0);
         textSize(30);
         text("Move your mouse to move", 500, 100, 500, 50);
@@ -316,7 +333,7 @@ function draw() {
 
     break;
     case UITLEGBEWEGEN2:
-        background(200, 200, 200);
+        tekenVeld();
         fill(0, 0, 0);
         textSize(30);
         text("Move your mouse to move", 500, 100, 500, 50);
@@ -338,7 +355,7 @@ function draw() {
 
     break;
     case UITLEGSCHIETEN:
-        background(255, 200, 200);
+        tekenVeld();
         fill(255, 255, 255);
         textSize(30);
         text("Press space to shoot", 500, 100, 500, 50);
