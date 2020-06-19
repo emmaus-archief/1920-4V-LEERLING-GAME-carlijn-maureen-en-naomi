@@ -521,22 +521,29 @@ function draw() {
         }
         if (score > 24){
             level = 5;
-        } 
+        }
 
-        if (level === 5){
+        // snellere snelheden
+
+        if (level === 1){
            minimaleSnelheidVijand = 3; //dit werkt alleen je kan het niet heel goed zien
         }
         
-        if (level === 10){
+        if (level === 2){
             maximaleSnelheidVijand = 7;
         }
 
-        if (level === 15){
-            minimaleSnelheidVijand = 4;
+        if (level === 3){
+            minimaleSnelheidVijand = 5;
         }
 
-        if (level === 20){
-            maximaleSnelheidVijand = 8;
+        if (level === 4){
+            maximaleSnelheidVijand = 9;
+        }
+
+        if (level === 5){
+            minimaleSnelheidVijand = 7;
+            maximaleSnelheidVijand = 10;
         }
         }
         
