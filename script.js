@@ -223,8 +223,8 @@ function tekenTimer() {
 
     var timerString = stopwatchMin + " : " + extraNul2 + stopwatchSec + " : " + extraNul1 + stopwatchMiliSec;
     
-    textSize(18);
-    text(timerString , SPEELVELDBREEDTE - 60, 30, 100, 50);
+    textSize(20);
+    text(timerString , SPEELVELDBREEDTE - 80, 30, 100, 50);
 }
 
 function tekenLevens() {
