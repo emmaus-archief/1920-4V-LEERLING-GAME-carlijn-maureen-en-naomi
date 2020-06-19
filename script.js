@@ -32,7 +32,7 @@ const GAMEOVER = 6;
 var score = 0;
 var aantalLevens = 3;
 
-var spelStatus = BEGIN;
+var spelStatus = SPELEN;
 
 var stopwatchMiliSec = 0;
 var stopwatchSec = 0;
@@ -358,10 +358,8 @@ var checkSpelerGeraakt = function(vijandNummer) {
     var teruggeefWaarde = false;
     
     
-        if (collideRectRect(mouseX, spelerY,  150, 150, vijandenX[vijandNummer], vijandenY[vijandNummer], 60, 60)) {
+        if (collideRectRect(vijandenX[vijandNummer], vijandenY[vijandNummer], 60, 60, mouseX, spelerY,  150, 150)) {
         teruggeefWaarde = true;
-
-        aantalLevens--;
 
         console.log("Vijand " + vijandNummer + " raakt speler");
         }
@@ -506,15 +504,16 @@ function draw() {
         }
       }
 
-    
-      if (checkSpelerGeraakt(i)) {
+    for(var i = 0; i < vijandenX.length; i++) {
+      if (checkSpelerGeraakt(i) === true) {
         // leven 
-        aantalLevens --;
+        aantalLevens--;
 
         // nieuwe vijand maken en oude verwijderen
         verwijderVijand(i);
         maakNieuweVijand();
       }
+    }
 
       tekenVeld();
       tekenVijand();
