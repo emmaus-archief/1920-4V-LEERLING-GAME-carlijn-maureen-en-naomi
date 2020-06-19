@@ -178,6 +178,20 @@ var tekenGameOverScherm = function (){
     fill(0, 0, 0);
     textSize(30);
     text("click here to restart!", 550, 410, 550, 700); // text in rechthoek
+
+    //Deze code is nodig om de timer goed op het eindscherm te hebben
+    var extraNul1 = "";
+    var extraNul2 = "";
+    if (stopwatchMiliSec < 10) {
+        extraNul1 = "0";
+    }
+    if (stopwatchSec < 10) {
+        extraNul2 = "0";
+    }
+
+    var timerString = stopwatchMin + " : " + extraNul2 + stopwatchSec + " : " + extraNul1 + stopwatchMiliSec;
+    textSize(25);
+    text(("Score: "+ score + "\nLevel: " + level + "\nTime: " + timerString), 400, 250, 600, 600);
 }
 
 var tekenLevelScherm = function (naam) {
@@ -270,6 +284,7 @@ function tekenLevel() {
 function tekenTimer() {
     var extraNul1 = "";
     var extraNul2 = "";
+
     if (stopwatchMiliSec < 10) {
         extraNul1 = "0";
     }
@@ -646,12 +661,14 @@ function draw() {
     break;
     case GAMEOVER:
         tekenGameOverScherm();
-        aantalLevens = 3;
-        score = 0;
-        level = 0;
+
 
         if ( mouseIsPressed === true && mouseX > 300 && mouseX < 1050 && mouseY > 400 && mouseY < 450) {
             spelStatus = SPELEN;
+            
+            aantalLevens = 3;
+            score = 0;
+            level = 0;
         }
     break;
     case LEVEL1:
