@@ -28,7 +28,7 @@ const UITLEGVERHAAL = 4;
 const SPELEN = 5;
 const GAMEOVER = 6;
 
-
+var level = 0; 
 var score = 0;
 var aantalLevens = 3;
 
@@ -205,6 +205,15 @@ function tekenScore() {
     fill(255, 255, 255);
     textSize(24);
     text("Score: "+score , 50, 30, 150, 100);
+}
+
+function tekenLevel() {
+    fill(7, 87, 217);  
+    rect(300, 15, 150, 50); 
+
+    fill(255, 255, 255);
+    textSize(24);
+    text("Level: "+level , 325, 30, 150, 100);
 }
 
 // hier wordt de timer getekend
@@ -454,6 +463,7 @@ function draw() {
         if (keyIsPressed === true && key === " ") {
             spelStatus = SPELEN;
             score = 0;
+            level = 0;
             aantalLevens = 3;
         }
 
@@ -472,10 +482,24 @@ function draw() {
           // nieuwe vijand maken en oude verwijderen
             verwijderVijand(i);
             maakNieuweVijand();
+
+            if (score > 4){
+            level = 1;
         }
+        if (score > 9){
+            level = 2;
+        }
+        if (score > 14){
+            level = 3;
+        }
+        if (score > 19){
+            level = 4;
+        }
+        }
+        
       }
 
-    
+
       if (checkSpelerGeraakt()) {
         // leven eraf of gezondheid verlagen
         // eventueel: nieuwe speler maken
@@ -488,6 +512,7 @@ function draw() {
       tekenTimer(); 
       timerLoopt();
       tekenScore();
+      tekenLevel();
 
       if (checkGameOver()) {
         spelStatus = GAMEOVER;
