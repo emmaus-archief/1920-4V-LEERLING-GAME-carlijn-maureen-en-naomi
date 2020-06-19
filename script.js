@@ -51,7 +51,7 @@ var vijandenY = [];   // y-positie van vijand
 var vijandenSnelheid = []; //de snelheid van de vallende vijanden
 var vijandYSnelheid = -2; // verticale snelheid van de vijanden
 
-var visX = 550; // x plaats van die vissen die levens aangeven op x-as
+var visX = 540; // x plaats van die vissen die levens aangeven op x-as
 var visY = 5; // y plaats van die vissen die levens aangeven op y-as
 var visGrootte = 80; // hoe breed en hoog de vissen zijn
 
