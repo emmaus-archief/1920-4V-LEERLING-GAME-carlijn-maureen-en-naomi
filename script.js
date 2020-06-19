@@ -37,7 +37,7 @@ var level = 0;
 var score = 0;
 var aantalLevens = 3;
 
-var spelStatus = GAMEOVER;
+var spelStatus = BEGIN;
 
 var stopwatchMiliSec = 0;
 var stopwatchSec = 0;
