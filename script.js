@@ -37,7 +37,7 @@ var level = 0;
 var score = 0;
 var aantalLevens = 3;
 
-var spelStatus = GAMEOVER;
+var spelStatus = BEGIN;
 
 var stopwatchMiliSec = 0;
 var stopwatchSec = 0;
@@ -78,7 +78,11 @@ var textMoveMouse; // declareert afb. move your mouse to move
 var textPressShoot; // declareert afb. press space to shoot
 var textVerhaal; // declareert afb. met het verhaal
 var plaatjeGameOver; // declareert afb. scerm game over
-
+var plaatjeLevel1; // declareert afb. level 1
+var plaatjeLevel2; // declareert afb. level 2
+var plaatjeLevel3; // declareert afb. level 3
+var plaatjeLevel4; // declareert afb. level 4
+var plaatjeLevel5; // declareert afb. level 5
 
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
@@ -100,6 +104,11 @@ function preload() {
     textPressShoot = loadImage('plaatjes/press-space.PNG')
     textVerhaal = loadImage('plaatjes/text-verhaal.PNG')
     plaatjeGameOver = loadImage('plaatjes/game-over.jpg')
+    plaatjeLevel1 = loadImage('plaatjes/level1.jpg')
+    plaatjeLevel2 = loadImage('plaatjes/level2.jpg')
+    plaatjeLevel3 = loadImage('plaatjes/level2.jpg')
+    plaatjeLevel4 = loadImage('plaatjes/level2.jpg')
+    plaatjeLevel5 = loadImage('plaatjes/level3.jpg')
 
 }
 
@@ -169,6 +178,21 @@ var tekenGameOverScherm = function (){
     fill(0, 0, 0);
     textSize(30);
     text("click here to restart!", 550, 410, 550, 700); // text in rechthoek
+}
+
+var tekenLevelScherm = function (naam) {
+    image(naam, 0, 0, width + 50, height + 50);
+
+    fill(240, 240, 240);
+     if ( mouseX > 300 && mouseX < 1050 && mouseY > 600 && mouseY < 650) {
+            fill(150, 150, 150);
+     }   
+    noStroke();
+    rect(300, 600, 750, 50); //rechthoek waar je om moet klikken om te beginnen
+
+    fill(0, 0, 0);
+    textSize(30);
+    text("click here to go on!", 560, 610, 550, 700); // text in rechthoek
 }
 
 /**
@@ -598,15 +622,28 @@ function draw() {
       if (checkGameOver()) {
         spelStatus = GAMEOVER;
       }
+    if (level === 1){
+         spelStatus = LEVEL1;   
+    }
     break;
     case GAMEOVER:
         tekenGameOverScherm();
+        aantalLevens = 3;
+        score = 0;
+        level = 0;
 
         if ( mouseIsPressed === true && mouseX > 300 && mouseX < 1050 && mouseY > 400 && mouseY < 450) {
             spelStatus = SPELEN;
         }
     break;
     case LEVEL1:
+        tekenLevelScherm(plaatjeLevel1);
+
+        if ( mouseIsPressed === true && mouseX > 300 && mouseX < 1050 && mouseY > 600 && mouseY < 650) {
+            spelStatus = SPELEN;
+        }
+        level = 1;
+        score = 5;
 
     break;
     case LEVEL2:
