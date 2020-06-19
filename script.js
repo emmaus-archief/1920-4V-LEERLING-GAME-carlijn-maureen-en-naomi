@@ -357,7 +357,7 @@ var checkVijandGeraakt = function(vijandNummer) {
 var checkSpelerGeraakt = function(vijandNummer) {
     var teruggeefWaarde = false;
     
-    for(var i = 0; i < vijandenX.length; i++) {
+    
         if (collideRectRect(mouseX, spelerY,  150, 150, vijandenX[vijandNummer], vijandenY[vijandNummer], 60, 60)) {
         teruggeefWaarde = true;
 
@@ -365,7 +365,7 @@ var checkSpelerGeraakt = function(vijandNummer) {
 
         console.log("Vijand " + vijandNummer + " raakt speler");
         }
-    }
+    
     
     return teruggeefWaarde;
 };
