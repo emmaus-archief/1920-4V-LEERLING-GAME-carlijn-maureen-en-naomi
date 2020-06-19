@@ -51,6 +51,7 @@ var vijandenX = [];   // x-positie van vijand
 var vijandenY = [];   // y-positie van vijand
 var vijandenSnelheid = []; //de snelheid van de vallende vijanden
 var vijandYSnelheid = -2; // verticale snelheid van de vijanden
+var minimaleSnelheidVijand = 2;
 
 
 // alle afbeeldingen
@@ -244,7 +245,7 @@ var beweegVijand = function() {
         if (vijandenY[i] > SPEELVELDHOOGTE + 20) {
             vijandenY[i] = random(-100, -30);
             vijandenX[i] = random(20, SPEELVELDBREEDTE - 20);
-            vijandenSnelheid[i] = random(2, 6);
+            vijandenSnelheid[i] = random(minimaleSnelheidVijand, 6);
        }
     }
 };
@@ -483,7 +484,7 @@ function draw() {
             verwijderVijand(i);
             maakNieuweVijand();
 
-            if (score > 4){
+        if (score > 4){
             level = 1;
         }
         if (score > 9){
@@ -495,6 +496,14 @@ function draw() {
         if (score > 19){
             level = 4;
         }
+        if (score > 24){
+            level = 5;
+        }
+
+        if (level === 5){
+            minimaleSnelheidVijand = 3; //dit werkt alleen je kan het niet heel goed zien
+        }
+
         }
         
       }
