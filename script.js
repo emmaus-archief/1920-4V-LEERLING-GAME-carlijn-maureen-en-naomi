@@ -578,22 +578,27 @@ function draw() {
             level = 5;
         } 
 
-        if (level === 5){
+        if (level === 1){
            minimaleSnelheidVijand = 3; //dit werkt alleen je kan het niet heel goed zien
         }
         
-        if (level === 10){
+        if (level === 2){
             maximaleSnelheidVijand = 7;
         }
 
-        if (level === 15){
+        if (level === 3){
             minimaleSnelheidVijand = 4;
         }
 
-        if (level === 20){
+        if (level === 4){
             maximaleSnelheidVijand = 8;
         }
+
+        if (level === 5){
+            minimaleSnelheidVijand = 5;
+            maximaleSnelheidVijand = 9;
         }
+    }
         
       }
 
