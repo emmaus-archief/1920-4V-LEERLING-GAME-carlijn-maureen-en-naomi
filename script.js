@@ -202,9 +202,12 @@ else if (key === 's') {
 */
 
 function tekenScore() {
+    fill(7, 87, 217);  
+    rect(25, 15, 150, 50); 
+
     fill(255, 255, 255);
     textSize(24);
-    text(""+score , 60, 70, 150, 100);
+    text("Score: "+score , 50, 30, 150, 100);
 }
 
 // hier wordt de timer getekend
