@@ -595,7 +595,7 @@ function draw() {
         }
 
         if (level === 5){
-            minimaleSnelheidVijand = 5;
+            minimaleSnelheidVijand = 6;
             maximaleSnelheidVijand = 9;
         }
     }
