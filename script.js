@@ -106,9 +106,9 @@ function preload() {
     plaatjeGameOver = loadImage('plaatjes/game-over.jpg')
     plaatjeLevel1 = loadImage('plaatjes/level1.jpg')
     plaatjeLevel2 = loadImage('plaatjes/level2.jpg')
-    plaatjeLevel3 = loadImage('plaatjes/level2.jpg')
-    plaatjeLevel4 = loadImage('plaatjes/level2.jpg')
-    plaatjeLevel5 = loadImage('plaatjes/level3.jpg')
+    plaatjeLevel3 = loadImage('plaatjes/level3.jpg')
+    plaatjeLevel4 = loadImage('plaatjes/level4.jpg')
+    plaatjeLevel5 = loadImage('plaatjes/level5.jpg')
 
 }
 
