@@ -432,7 +432,7 @@ function setup() {
     console.log("Dit is nummer " + i);
     vijandenX.push(random(20, 1220));
     vijandenY.push(random(-250, -30));
-    vijandenSnelheid.push(random(2, 10));
+    vijandenSnelheid.push(random(minimaleSnelheidVijand, maximaleSnelheidVijand));
   }
   
 }
