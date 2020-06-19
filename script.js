@@ -361,7 +361,7 @@ var checkSpelerGeraakt = function(vijandNummer) {
         if (collideRectRect(mouseX, spelerY,  150, 150, vijandenX[vijandNummer], vijandenY[vijandNummer], 60, 60)) {
         teruggeefWaarde = true;
 
-        score--;
+        aantalLevens--;
 
         console.log("Vijand " + vijandNummer + " raakt speler");
         }
