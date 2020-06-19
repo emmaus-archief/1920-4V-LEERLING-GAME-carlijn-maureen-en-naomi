@@ -32,7 +32,6 @@ var level = 0;
 var score = 0;
 var aantalLevens = 3;
 
-
 var spelStatus = BEGIN;
 
 var stopwatchMiliSec = 0;
@@ -53,6 +52,10 @@ var vijandenSnelheid = []; //de snelheid van de vallende vijanden
 var vijandYSnelheid = -2; // verticale snelheid van de vijanden
 var minimaleSnelheidVijand = 2;
 var maximaleSnelheidVijand = 6;
+
+var visX = 540; // x plaats van die vissen die levens aangeven op x-as
+var visY = 5; // y plaats van die vissen die levens aangeven op y-as
+var visGrootte = 80; // hoe breed en hoog de vissen zijn
 
 
 // alle afbeeldingen
@@ -230,8 +233,25 @@ function tekenTimer() {
 
     var timerString = stopwatchMin + " : " + extraNul2 + stopwatchSec + " : " + extraNul1 + stopwatchMiliSec;
     
-    textSize(18);
-    text(timerString , SPEELVELDBREEDTE - 60, 30, 100, 50);
+    textSize(20);
+    text(timerString , SPEELVELDBREEDTE - 80, 30, 100, 50);
+}
+
+function tekenLevens() {
+        image(plaatjeLevendeVis, visX, visY, visGrootte, visGrootte);
+
+    if (aantalLevens === 3) {
+        image(plaatjeLevendeVis, visX + visGrootte, visY, visGrootte, visGrootte);
+        image(plaatjeLevendeVis, visX + 2*visGrootte, visY, visGrootte, visGrootte);
+    }
+    if (aantalLevens === 2) {
+        image(plaatjeLevendeVis, visX + visGrootte, visY, visGrootte, visGrootte);
+        image(plaatjeDodeVis, visX + 2*visGrootte, visY, visGrootte, visGrootte);
+    }
+    if (aantalLevens === 1) {
+        image(plaatjeDodeVis, visX + visGrootte, visY, visGrootte, visGrootte);
+        image(plaatjeDodeVis, visX + 2*visGrootte, visY, visGrootte, visGrootte);
+    }
 }
 
 
@@ -538,6 +558,7 @@ function draw() {
       timerLoopt();
       tekenScore();
       tekenLevel();
+      tekenLevens();
 
       if (checkGameOver()) {
         spelStatus = GAMEOVER;
