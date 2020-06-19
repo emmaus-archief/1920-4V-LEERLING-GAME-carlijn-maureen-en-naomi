@@ -27,12 +27,17 @@ const UITLEGSCHIETEN = 3;
 const UITLEGVERHAAL = 4;
 const SPELEN = 5;
 const GAMEOVER = 6;
+const LEVEL1 = 7;
+const LEVEL2 = 8;
+const LEVEL3 = 9;
+const LEVEL4 = 10;
+const LEVEL5 = 11;
 
 var level = 0; 
 var score = 0;
 var aantalLevens = 3;
 
-var spelStatus = BEGIN;
+var spelStatus = GAMEOVER;
 
 var stopwatchMiliSec = 0;
 var stopwatchSec = 0;
@@ -72,6 +77,7 @@ var naamGame; // declareert afb. naam game op beginscherm
 var textMoveMouse; // declareert afb. move your mouse to move
 var textPressShoot; // declareert afb. press space to shoot
 var textVerhaal; // declareert afb. met het verhaal
+var plaatjeGameOver; // declareert afb. scerm game over
 
 
 /* ********************************************* */
@@ -93,6 +99,7 @@ function preload() {
     textMoveMouse = loadImage('plaatjes/text-move-mouse.PNG')
     textPressShoot = loadImage('plaatjes/press-space.PNG')
     textVerhaal = loadImage('plaatjes/text-verhaal.PNG')
+    plaatjeGameOver = loadImage('plaatjes/game-over.jpg')
 
 }
 
@@ -147,6 +154,21 @@ var tekenUitlegVerhaalScherm = function () {
     image(plaatjeSpaceShip, 0, 0, width + 50, height + 50); // is de achtergrond, '+ 50' zodat de lelijke onderkant er niet op komt
 
     image(textVerhaal, 250, 100, 800, 500);
+}
+
+var tekenGameOverScherm = function (){
+    image(plaatjeGameOver, 0, 0, width + 50, height + 50);
+
+    fill(140, 140, 140);
+    if ( mouseX > 300 && mouseX < 1050 && mouseY > 400 && mouseY < 450) {
+            fill(200, 200, 200);
+     }   
+    noStroke();
+    rect(300, 400, 750, 50); //rechthoek waar je om moet klikken om te beginnen
+
+    fill(0, 0, 0);
+    textSize(30);
+    text("click here to restart!", 550, 410, 550, 700); // text in rechthoek
 }
 
 /**
@@ -576,7 +598,27 @@ function draw() {
       if (checkGameOver()) {
         spelStatus = GAMEOVER;
       }
-      break;
+    break;
+    case GAMEOVER:
+        tekenGameOverScherm();
+
+        if ( mouseIsPressed === true && mouseX > 300 && mouseX < 1050 && mouseY > 400 && mouseY < 450) {
+            spelStatus = SPELEN;
+        }
+    break;
+    case LEVEL1:
+
+    break;
+    case LEVEL2:
+    
+    break;
+    case LEVEL3:
+
+    break;
+    case LEVEL4:
+
+    break;
+    case LEVEL5:
   }
 }
 
