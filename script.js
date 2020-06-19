@@ -28,7 +28,7 @@ const UITLEGVERHAAL = 4;
 const SPELEN = 5;
 const GAMEOVER = 6;
 
-
+var level = 0; 
 var score = 0;
 var aantalLevens = 3;
 
@@ -50,6 +50,8 @@ var vijandenX = [];   // x-positie van vijand
 var vijandenY = [];   // y-positie van vijand
 var vijandenSnelheid = []; //de snelheid van de vallende vijanden
 var vijandYSnelheid = -2; // verticale snelheid van de vijanden
+var minimaleSnelheidVijand = 2;
+var maximaleSnelheidVijand = 6;
 
 var visX = 540; // x plaats van die vissen die levens aangeven op x-as
 var visY = 5; // y plaats van die vissen die levens aangeven op y-as
@@ -70,7 +72,6 @@ var naamGame; // declareert afb. naam game op beginscherm
 var textMoveMouse; // declareert afb. move your mouse to move
 var textPressShoot; // declareert afb. press space to shoot
 var textVerhaal; // declareert afb. met het verhaal
-
 
 
 /* ********************************************* */
@@ -210,6 +211,15 @@ function tekenScore() {
     text("Score: "+score , 50, 30, 150, 100);
 }
 
+function tekenLevel() {
+    fill(7, 87, 217);  
+    rect(300, 15, 150, 50); 
+
+    fill(255, 255, 255);
+    textSize(24);
+    text("Level: "+level , 325, 30, 150, 100);
+}
+
 // hier wordt de timer getekend
 function tekenTimer() {
     var extraNul1 = "";
@@ -255,7 +265,7 @@ var beweegVijand = function() {
         if (vijandenY[i] > SPEELVELDHOOGTE + 20) {
             vijandenY[i] = random(-100, -30);
             vijandenX[i] = random(20, SPEELVELDBREEDTE - 20);
-            vijandenSnelheid[i] = random(2, 6);
+            vijandenSnelheid[i] = random(minimaleSnelheidVijand, maximaleSnelheidVijand);
        }
     }
 };
@@ -333,15 +343,18 @@ var checkVijandGeraakt = function() {
 var checkVijandGeraakt = function(vijandNummer) {
   var teruggeefWaarde = false;
 
+
   for(var i = 0; i < kogelsX.length; i++) {
     if (collideRectRect(kogelsX[i], kogelsY[i], 30, 60, vijandenX[vijandNummer], vijandenY[vijandNummer], 60, 60)) {
         teruggeefWaarde = true;
         
+         
         // verwijder de kogel die de vijand raakt
         verwijderKogel(i);
 
         // schrijf boodschap in de console, handig bij het testen van de game
         console.log("Vijand " + vijandNummer + " door kogel " + i);
+        
     }
   }
 
@@ -474,6 +487,7 @@ function draw() {
         if (keyIsPressed === true && key === " ") {
             spelStatus = SPELEN;
             score = 0;
+            level = 0;
             aantalLevens = 3;
         }
 
@@ -492,10 +506,45 @@ function draw() {
           // nieuwe vijand maken en oude verwijderen
             verwijderVijand(i);
             maakNieuweVijand();
+
+        if (score > 4){ // het lukt mij niet om hier een for loop van te maken,
+            level = 1; // als iemand anders het wel kan graag
         }
+        if (score > 9){
+            level = 2;
+        }
+        if (score > 14){
+            level = 3;
+        }
+        if (score > 19){
+            level = 4;
+        }
+        if (score > 24){
+            level = 5;
+        } 
+
+        if (level === 5){
+           minimaleSnelheidVijand = 3; //dit werkt alleen je kan het niet heel goed zien
+        }
+        
+        if (level === 10){
+            maximaleSnelheidVijand = 7;
+        }
+
+        if (level === 15){
+            minimaleSnelheidVijand = 4;
+        }
+
+        if (level === 20){
+            maximaleSnelheidVijand = 8;
+        }
+        }
+        
       }
 
-    
+      
+
+
       if (checkSpelerGeraakt()) {
         // leven eraf of gezondheid verlagen
         // eventueel: nieuwe speler maken
@@ -508,6 +557,7 @@ function draw() {
       tekenTimer(); 
       timerLoopt();
       tekenScore();
+      tekenLevel();
       tekenLevens();
 
       if (checkGameOver()) {
