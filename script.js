@@ -182,7 +182,7 @@ var tekenKogels = function() {
  */
 var tekenSpeler = function(x, y) {
   fill('white'); // laat dit staan, anders werkt het niet
-  image(plaatjeSpeler, mouseX, spelerY - 100, 149, 150); // afbeelding speler >>> spelerY - 100 omdat het anders onder het scherm komt
+  image(plaatjeSpeler, mouseX, spelerY - 100, 150, 150); // afbeelding speler >>> spelerY - 100 omdat het anders onder het scherm komt
   //ellipse(mouseX, spelerY, 50, 50); // voor als we weer terug willen naar een witte ellipse
 }
 /* deze is voor asdw beweging maar wel houterig
@@ -367,9 +367,18 @@ var checkVijandGeraakt = function(vijandNummer) {
  * bijvoorbeeld door botsing met vijand
  * @returns {boolean} true als speler is geraakt
  */
-var checkSpelerGeraakt = function() {
+var checkSpelerGeraakt = function(vijandNummer) {
+    var teruggeefWaarde = false;
     
-  return false;
+    
+        if (collideRectRect(vijandenX[vijandNummer], vijandenY[vijandNummer], 60, 60, mouseX, spelerY,  150, 150)) {
+        teruggeefWaarde = true;
+
+        console.log("Vijand " + vijandNummer + " raakt speler");
+        }
+    
+    
+    return teruggeefWaarde;
 };
 
 
@@ -542,13 +551,17 @@ function draw() {
         
       }
 
-      
 
+    for(var i = 0; i < vijandenX.length; i++) {
+      if (checkSpelerGeraakt(i) === true) {
+        // leven 
+        aantalLevens--;
 
-      if (checkSpelerGeraakt()) {
-        // leven eraf of gezondheid verlagen
-        // eventueel: nieuwe speler maken
+        // nieuwe vijand maken en oude verwijderen
+        verwijderVijand(i);
+        maakNieuweVijand();
       }
+    }
 
       tekenVeld();
       tekenVijand();
