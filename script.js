@@ -622,9 +622,10 @@ function draw() {
       if (checkGameOver()) {
         spelStatus = GAMEOVER;
       }
-    if (level === 1){
+    if (score === 5){
          spelStatus = LEVEL1;   
     }
+
     break;
     case GAMEOVER:
         tekenGameOverScherm();
@@ -638,12 +639,11 @@ function draw() {
     break;
     case LEVEL1:
         tekenLevelScherm(plaatjeLevel1);
+        score = 6;
 
         if ( mouseIsPressed === true && mouseX > 300 && mouseX < 1050 && mouseY > 600 && mouseY < 650) {
             spelStatus = SPELEN;
         }
-        level = 1;
-        score = 5;
 
     break;
     case LEVEL2:
