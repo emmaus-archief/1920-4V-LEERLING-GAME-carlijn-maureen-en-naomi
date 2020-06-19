@@ -625,6 +625,18 @@ function draw() {
     if (score === 5){
          spelStatus = LEVEL1;   
     }
+    if (score === 9){
+         spelStatus = LEVEL2;   
+    }
+    if (score === 14){
+         spelStatus = LEVEL3;   
+    }
+    if (score === 19){
+         spelStatus = LEVEL4;   
+    }
+    if (score === 24){
+         spelStatus = LEVEL5;   
+    }
 
     break;
     case GAMEOVER:
@@ -647,22 +659,38 @@ function draw() {
 
     break;
     case LEVEL2:
+        tekenLevelScherm(plaatjeLevel2);
+        score = 10;
+
+        if ( mouseIsPressed === true && mouseX > 300 && mouseX < 1050 && mouseY > 600 && mouseY < 650) {
+            spelStatus = SPELEN;
+        }
     
     break;
     case LEVEL3:
+        tekenLevelScherm(plaatjeLevel3);
+        score = 15;
+
+        if ( mouseIsPressed === true && mouseX > 300 && mouseX < 1050 && mouseY > 600 && mouseY < 650) {
+            spelStatus = SPELEN;
+        }
 
     break;
     case LEVEL4:
+        tekenLevelScherm(plaatjeLevel4);
+        score = 20;
+
+        if ( mouseIsPressed === true && mouseX > 300 && mouseX < 1050 && mouseY > 600 && mouseY < 650) {
+            spelStatus = SPELEN;
+        }
 
     break;
     case LEVEL5:
+        tekenLevelScherm(plaatjeLevel5);
+        score = 25;
+
+        if ( mouseIsPressed === true && mouseX > 300 && mouseX < 1050 && mouseY > 600 && mouseY < 650) {
+            spelStatus = SPELEN;    
   }
 }
-
-/*
-function tekenTimer() {
-    text(timer, 50, 50, 50, 50);
-    color: red;
 }
-*/
-
