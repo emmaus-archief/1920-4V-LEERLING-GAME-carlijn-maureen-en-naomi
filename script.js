@@ -32,7 +32,7 @@ const GAMEOVER = 6;
 var score = 0;
 var aantalLevens = 3;
 
-var spelStatus = SPELEN;
+var spelStatus = BEGIN;
 
 var stopwatchMiliSec = 0;
 var stopwatchSec = 0;
