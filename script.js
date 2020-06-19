@@ -39,7 +39,7 @@ var stopwatchMiliSec = 0;
 var stopwatchSec = 0;
 var stopwatchMin = 0;
 
-var spelerX = 650; // x-positie van speler
+var spelerX = 0; // x-positie van speler
 var spelerY = 650; // y-positie van speler
 
 //var isKogelZichtbaar = false; //geeft aan waneer de kogel te zien is
@@ -61,6 +61,8 @@ var plaatjeKogel; // declareert afb. kogel
 var plaatjeMoveHere; // declareert afb. move here blokje
 var plaatjeShootHere; // declareert afb. shoot here blokje
 var plaatjeSpaceShip; // declareert afb. die wordt gebruikt als achtergrond bij verhaal
+var plaatjeLevendeVis; // declareert afb. levende vis die wordt gebruikt bij de levens
+var plaatjeDodeVis; // declareeert afb. dode vis die wordt gebruikt bij de levens
 var naamGame; // declareert afb. naam game op beginscherm
 var textMoveMouse; // declareert afb. move your mouse to move
 var textPressShoot; // declareert afb. press space to shoot
@@ -81,6 +83,8 @@ function preload() {
     plaatjeMoveHere = loadImage('plaatjes/move-here.jpg')
     plaatjeShootHere = loadImage('plaatjes/shoot-here.jpg')
     plaatjeSpaceShip = loadImage('plaatjes/binnenSpaceShip.jpg')
+    plaatjeLevendeVis = loadImage('plaatjes/vis.PNG')
+    plaatjeDodeVis = loadImage('plaatjes/dodeVis.PNG')
     naamGame = loadImage('plaatjes/naamGame.PNG')
     textMoveMouse = loadImage('plaatjes/text-move-mouse.PNG')
     textPressShoot = loadImage('plaatjes/press-space.PNG')
@@ -197,7 +201,7 @@ else if (key === 's') {
 function tekenScore() {
     fill(255, 255, 255);
     textSize(24);
-    text(""+score , 100, 50, 150, 100);
+    text(""+score , 50, 30, 150, 100);
 }
 
 // hier wordt de timer getekend
@@ -322,14 +326,6 @@ var checkVijandGeraakt = function(vijandNummer) {
     return teruggeefWaarde;
 };
 
-function verwijderVijand(nummer) {
-    console.log("verwijder vijand " + nummer);
-    vijandenX.splice(nummer, 1);
-    vijandenY.splice(nummer, 1)
-    vijandenSnelheid.splice(nummer, 1);
-}
-
-
 /**
  * Zoekt uit of de speler is geraakt
  * bijvoorbeeld door botsing met vijand
@@ -354,25 +350,6 @@ var checkGameOver = function() {
   return teruggeefWaarde;
 };
 
-/**
- * Zoekt uit of de speler is geraakt
- * bijvoorbeeld door botsing met vijand
- * @returns {boolean} true als speler is geraakt
- */
-var checkSpelerGeraakt = function() {
-    
-  return false;
-};
-
-
-/**
- * Zoekt uit of het spel is afgelopen
- * @returns {boolean} true als het spel is afgelopen
- */
-var checkGameOver = function() {
-    
-  return false;
-};
 
 // deze functie zorgt ervoor dat de timer gaat lopen
 function timerLoopt() {
