@@ -52,6 +52,7 @@ var vijandenY = [];   // y-positie van vijand
 var vijandenSnelheid = []; //de snelheid van de vallende vijanden
 var vijandYSnelheid = -2; // verticale snelheid van de vijanden
 var minimaleSnelheidVijand = 2;
+var maximaleSnelheidVijand = 6;
 
 
 // alle afbeeldingen
@@ -68,7 +69,6 @@ var naamGame; // declareert afb. naam game op beginscherm
 var textMoveMouse; // declareert afb. move your mouse to move
 var textPressShoot; // declareert afb. press space to shoot
 var textVerhaal; // declareert afb. met het verhaal
-
 
 
 /* ********************************************* */
@@ -245,7 +245,7 @@ var beweegVijand = function() {
         if (vijandenY[i] > SPEELVELDHOOGTE + 20) {
             vijandenY[i] = random(-100, -30);
             vijandenX[i] = random(20, SPEELVELDBREEDTE - 20);
-            vijandenSnelheid[i] = random(minimaleSnelheidVijand, 6);
+            vijandenSnelheid[i] = random(minimaleSnelheidVijand, maximaleSnelheidVijand);
        }
     }
 };
@@ -323,15 +323,18 @@ var checkVijandGeraakt = function() {
 var checkVijandGeraakt = function(vijandNummer) {
   var teruggeefWaarde = false;
 
+
   for(var i = 0; i < kogelsX.length; i++) {
     if (collideRectRect(kogelsX[i], kogelsY[i], 30, 60, vijandenX[vijandNummer], vijandenY[vijandNummer], 60, 60)) {
         teruggeefWaarde = true;
         
+         
         // verwijder de kogel die de vijand raakt
         verwijderKogel(i);
 
         // schrijf boodschap in de console, handig bij het testen van de game
         console.log("Vijand " + vijandNummer + " door kogel " + i);
+        
     }
   }
 
@@ -484,8 +487,8 @@ function draw() {
             verwijderVijand(i);
             maakNieuweVijand();
 
-        if (score > 4){
-            level = 1;
+        if (score > 4){ // het lukt mij niet om hier een for loop van te maken,
+            level = 1; // als iemand anders het wel kan graag
         }
         if (score > 9){
             level = 2;
@@ -498,15 +501,28 @@ function draw() {
         }
         if (score > 24){
             level = 5;
-        }
+        } 
 
         if (level === 5){
-            minimaleSnelheidVijand = 3; //dit werkt alleen je kan het niet heel goed zien
+           minimaleSnelheidVijand = 3; //dit werkt alleen je kan het niet heel goed zien
+        }
+        
+        if (level === 10){
+            maximaleSnelheidVijand = 7;
         }
 
+        if (level === 15){
+            minimaleSnelheidVijand = 4;
+        }
+
+        if (level === 20){
+            maximaleSnelheidVijand = 8;
+        }
         }
         
       }
+
+      
 
 
       if (checkSpelerGeraakt()) {
